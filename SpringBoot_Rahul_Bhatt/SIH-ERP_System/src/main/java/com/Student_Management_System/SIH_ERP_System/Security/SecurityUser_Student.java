@@ -7,17 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public class PrincipalUser implements UserDetails {
+public class SecurityUser_Student implements UserDetails {
 
     private final Student_Entity user;
 
-    public PrincipalUser(Student_Entity user){
+    public SecurityUser_Student(Student_Entity user){
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole()));
+        return List.of(new SimpleGrantedAuthority("STUDENT"));
     }
 
     @Override
@@ -30,8 +30,7 @@ public class PrincipalUser implements UserDetails {
         return this.user.getStudentid();
     }
 
-    @Override
-    public boolean isEnabled() {
-        return this.user.isEnabled();
+    public Integer Enabled() {
+        return this.user.getEnabled();
     }
 }

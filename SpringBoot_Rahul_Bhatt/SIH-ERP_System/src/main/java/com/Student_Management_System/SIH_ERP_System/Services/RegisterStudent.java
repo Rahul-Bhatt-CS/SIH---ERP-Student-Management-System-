@@ -17,8 +17,7 @@ public class RegisterStudent {
     public ResponseEntity<?> registerStudent(Student_Entity student){
         if(repo.findByStudentid(student.getStudentid()) == null){
             student.setPassword(encoder.encode(student.getPassword()));
-            student.setEnabled(true);
-            student.setRole("STUDENT");
+            student.setEnabled(0);
             return ResponseEntity.ok(repo.save(student));
         }
         return ResponseEntity.badRequest().body("User already exists");

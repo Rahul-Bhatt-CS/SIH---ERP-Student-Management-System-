@@ -8,8 +8,7 @@ public class Student_Entity {
     @Id
     private String studentid;
     private String password;
-    private boolean enabled;
-    private String role;
+    private Integer enabled;
 
     public String getStudentid() {
         return studentid;
@@ -27,19 +26,12 @@ public class Student_Entity {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
