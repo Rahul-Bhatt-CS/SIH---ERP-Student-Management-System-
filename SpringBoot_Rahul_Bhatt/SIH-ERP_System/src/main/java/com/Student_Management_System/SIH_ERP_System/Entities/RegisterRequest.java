@@ -2,7 +2,7 @@ package com.Student_Management_System.SIH_ERP_System.Entities;
 
 public class RegisterRequest {
     private Student_Entity student;
-    private Student_CollegeDetails studentCollegeDetails;
+    private CollegeDetails studentCollegeDetails;
 
     public Student_Entity getStudent() {
         return student;
@@ -12,11 +12,11 @@ public class RegisterRequest {
         this.student = student;
     }
 
-    public Student_CollegeDetails getStudentCollegeDetails() {
+    public CollegeDetails getStudentCollegeDetails() {
         return studentCollegeDetails;
     }
 
-    public void setStudentCollegeDetails(Student_CollegeDetails studentCollegeDetails) {
+    public void setStudentCollegeDetails(CollegeDetails studentCollegeDetails) {
         this.studentCollegeDetails = studentCollegeDetails;
     }
 }

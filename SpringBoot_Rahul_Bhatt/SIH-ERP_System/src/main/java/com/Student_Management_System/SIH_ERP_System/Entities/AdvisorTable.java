@@ -17,4 +17,28 @@ public class AdvisorTable {
     @MapsId("studentId")
     @JoinColumn(name = "studentid")
     private Student_Entity student;
+
+    public AdvisorId getId() {
+        return id;
+    }
+
+    public void setId(AdvisorId id) {
+        this.id = id;
+    }
+
+    public FacultyDetails getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(FacultyDetails faculty) {
+        this.faculty = faculty;
+    }
+
+    public Student_Entity getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student_Entity student) {
+        this.student = student;
+    }
 }

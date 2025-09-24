@@ -1,6 +1,5 @@
 package com.Student_Management_System.SIH_ERP_System.Entities;
 
-import com.Student_Management_System.SIH_ERP_System.Controller.CourseDetails;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -50,8 +49,47 @@ public class Student_Entity {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 
+    public MiscDetails getMiscDetails() {
+        return miscDetails;
+    }
+
+    public void setMiscDetails(MiscDetails miscDetails) {
+        this.miscDetails = miscDetails;
+    }
+
+    public List<AdvisorTable> getAdvisors() {
+        return advisors;
+    }
+
+    public void setAdvisors(List<AdvisorTable> advisors) {
+        this.advisors = advisors;
+    }
+
+    public HostelDetails getHostelDetails() {
+        return hostelDetails;
+    }
+
+    public void setHostelDetails(HostelDetails hostelDetails) {
+        this.hostelDetails = hostelDetails;
+    }
+
+    public CollegeDetails getCollegeDetails() {
+        return collegeDetails;
+    }
+
+    public void setCollegeDetails(CollegeDetails collegeDetails) {
+        this.collegeDetails = collegeDetails;
+    }
+
+    public List<CourseDetails> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseDetails> courses) {
+        this.courses = courses;
+    }
 }

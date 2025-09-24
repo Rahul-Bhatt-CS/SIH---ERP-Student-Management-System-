@@ -21,5 +21,45 @@ public class CourseDetails {
 
     private String semester;
     private Float marks;
+
+    public CourseDetailsId getId() {
+        return id;
+    }
+
+    public void setId(CourseDetailsId id) {
+        this.id = id;
+    }
+
+    public CourseTable getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseTable course) {
+        this.course = course;
+    }
+
+    public Student_Entity getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student_Entity student) {
+        this.student = student;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public Float getMarks() {
+        return marks;
+    }
+
+    public void setMarks(Float marks) {
+        this.marks = marks;
+    }
 }
 
