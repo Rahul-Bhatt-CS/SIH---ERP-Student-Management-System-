@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class StudentConfig {
+public class ProjectConfig {
     @Autowired
     SecurityUser_AdminDetailsService securityUserAdminDetailsService;
     @Autowired
@@ -29,8 +29,6 @@ public class StudentConfig {
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(r ->
                 r
-//                        .requestMatchers(HttpMethod.POST,"/register").permitAll()
-//                        .requestMatchers(HttpMethod.GET,"/test")
                         .requestMatchers(HttpMethod.GET,"/approveStudents").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()
