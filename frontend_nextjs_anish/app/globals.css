@@ -81,18 +81,15 @@
 }
 
 .dark {
-  /* Dark mode with true black header/footer, slightly lighter main */
-  --background: #0a0a0a;
+  --background: #1f1f1f;
   --foreground: #ffffff;
   --card: #111111;
   --card-foreground: #ffffff;
-  --popover: #111111;
-  --popover-foreground: #ffffff;
   --primary: #1e40af;
   --primary-foreground: #ffffff;
   --secondary: #9333ea;
   --secondary-foreground: #ffffff;
-  --muted: #1c1c1c;
+  --muted: #1a1a1a;
   --muted-foreground: #bbbbbb;
   --accent: #0ea5e9;
   --accent-foreground: #ffffff;
@@ -100,11 +97,6 @@
   --border: #222222;
   --input: #222222;
   --ring: #444444;
-  --chart-1: #3b82f6;
-  --chart-2: #10b981;
-  --chart-3: #facc15;
-  --chart-4: #8b5cf6;
-  --chart-5: #f472b6;
   --sidebar: #111111;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #1e40af;
@@ -113,7 +105,6 @@
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #222222;
   --sidebar-ring: #444444;
-  --header-footer-bg: #000000;
 }
 
 @layer base {
@@ -126,12 +117,19 @@
     font-family: var(--font-sans);
   }
 
-  /* Cards */
-  .card {
-    @apply bg-card shadow-lg rounded-lg text-card-foreground transition-all duration-300;
+  /* Outer container */
+  .outer-bg {
+    @apply relative flex justify-center items-center p-6 sm:p-10 min-h-screen;
+    background: var(--muted);
+    /* static dark gray/neutral background */
   }
 
-  /* Buttons with subtle glow on hover */
+  /* Cards */
+  .card {
+    @apply z-10 relative bg-card shadow-lg rounded-lg text-card-foreground;
+  }
+
+  /* Buttons */
   button {
     @apply rounded-lg font-semibold transition-all duration-300;
   }
@@ -144,7 +142,6 @@
     color: var(--muted-foreground);
   }
 
-  /* Remove underline from all links */
   a,
   a:hover,
   a:active,

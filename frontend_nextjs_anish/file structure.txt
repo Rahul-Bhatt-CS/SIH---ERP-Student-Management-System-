@@ -5,23 +5,27 @@ student-erp-frontend/
 │  ├─ page.js                     
 │
 │  ├─ student/                    # Student-only routes (Protected)
-│  │  └─ register/page.js         # Student register page
+│  │  |─ register/page.js         # Student register page
 │  │  ├─ dashboard/page.js        # Student dashboard/home
 │  │  ├─ admissions/page.js       # Admissions page
 │  │  ├─ fees/page.js             # Fees page
 │  │  ├─ hostel/page.js           # Hostel page
-│  │  └─ exams/page.js            # Exams page
-|  |─── page.js                   # Student login page
+│  │  |─ exams/page.js            # Exams page
+|  |  └─ login/page.js            # Student login page
 │
 │  ├─ faculty/                    # Faculty-only routes (Protected)
-│  │  └─ register/page.js         # Faculty register page
-│  │  └─ dashboard/page.js        # Faculty dashboard/home
-|  |─── page.js                   # Faculty login page
+│  │  |─ register/page.js         # Faculty register page
+│  │  |─ dashboard/page.js        # Faculty dashboard/home
+|  |  └─ login/page.js            # Faculty login page
 │
-│  ├─ librarian/                  # liobrarian-only routes (Protected)
-│  │  └─ register/page.js         # Libraraian register page
-│  │  └─ dashboard/page.js        # Librarian dashboard/home
-|  |─── page.js                   # Librarian login page
+│  ├─ librarian/                  # Librarian-only routes (Protected)
+│  │  |─ register/page.js         # Libraraian register page
+│  │  |─ dashboard/page.js        # Librarian dashboard/home
+|  |  └─ login/page.js            # Librarian login page
+|
+|  |─ admin/                      # Admin-only routes (Protected)
+│  │  |─ dashboard/page.js        # Amin dashboard/home
+|  |  └─ login/page.js            # Admin login page
 |
 ├─ components/
 │  ├─ Header.js                   # Header with theme toggle & role-based navigation
