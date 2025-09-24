@@ -1,5 +1,14 @@
-import LoginForm from "@/components/LoginForm";
+import AuthForm from "@/components/AuthForm";
 
 export default function FacultyLogin() {
-  return <LoginForm role="Faculty" loginEndpoint="/api/faculty/login" />;
+  const fields = ["email", "password"];
+
+  return (
+    <AuthForm
+      role="Faculty"
+      type="Login"
+      fields={fields}
+      submitEndpoint="/faculty/login"
+    />
+  );
 }
