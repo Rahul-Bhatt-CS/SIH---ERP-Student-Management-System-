@@ -3,57 +3,44 @@
 "use client";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Users, DollarSign, Home, FileText } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Users, BookOpen, DollarSign } from "lucide-react";
 
-const statsData = [
-  { title: "Total Students", icon: <Users />, value: 1250 },
-  { title: "Fees Collected", icon: <DollarSign />, value: 850000 },
-  { title: "Hostel Occupancy", icon: <Home />, value: 320 },
-  { title: "Upcoming Exams", icon: <FileText />, value: 12 },
+const stats = [
+  {
+    name: "Students",
+    value: "1,245",
+    icon: <Users className="w-8 h-8 text-blue-400" />,
+  },
+  {
+    name: "Courses",
+    value: "58",
+    icon: <BookOpen className="w-8 h-8 text-green-400" />,
+  },
+  {
+    name: "Fees Collected",
+    value: "$120,450",
+    icon: <DollarSign className="w-8 h-8 text-purple-400" />,
+  },
 ];
 
 export default function DashboardStats() {
-  const [counts, setCounts] = useState(statsData.map(() => 0));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounts((prev) =>
-        prev.map((v, i) => {
-          if (v < statsData[i].value)
-            return v + Math.ceil(statsData[i].value / 50);
-          return statsData[i].value;
-        })
-      );
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="py-16 px-6 max-w-7xl mx-auto">
-      <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-        Key Metrics
-      </h2>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {statsData.map((stat, idx) => (
-          <Card
-            key={stat.title}
-            className="flex flex-col items-center justify-center p-6 hover:scale-105 transform transition-all duration-300 border border-border shadow hover:shadow-lg"
-          >
-            <div className="mb-4 text-primary">{stat.icon}</div>
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">
-                {stat.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-foreground">
-                {counts[idx].toLocaleString()}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+    <section className="py-16 px-6 max-w-7xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-3">
+      {stats.map((stat) => (
+        <Card
+          key={stat.name}
+          className="relative cursor-pointer transform transition-all duration-300 hover:scale-105 shadow-lg border border-border bg-card"
+        >
+          <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300 bg-gradient-to-br from-transparent to-primary/30 dark:to-primary/50 pointer-events-none"></div>
+          <CardHeader className="flex items-center gap-4 z-10 relative">
+            {stat.icon}
+            <CardTitle className="text-white">{stat.name}</CardTitle>
+          </CardHeader>
+          <CardContent className="z-10 relative">
+            <p className="text-2xl font-bold text-white">{stat.value}</p>
+          </CardContent>
+        </Card>
+      ))}
     </section>
   );
 }
