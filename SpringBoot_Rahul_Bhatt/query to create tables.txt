@@ -1,4 +1,6 @@
-query to create tables:
+create database sih;
+use sih;
+
 
 CREATE TABLE auth_table_students(
 	studentid varchar(255) primary key,
@@ -14,7 +16,7 @@ CREATE TABLE admin_auth_table(
 
 
 CREATE TABLE misc_details (
-    studentid VARCHAR(50),
+    studentid VARCHAR(255),
     local_address VARCHAR(255),
     district VARCHAR(100),
     state VARCHAR(100),
@@ -26,7 +28,7 @@ CREATE TABLE misc_details (
 
 
 CREATE TABLE hostel_details (
-    studentid VARCHAR(50),
+    studentid VARCHAR(255),
     name_of_hostel VARCHAR(100),
     room VARCHAR(50),
     PRIMARY KEY (studentid),
@@ -35,7 +37,7 @@ CREATE TABLE hostel_details (
 
 
 CREATE TABLE faculty_details (
-    facultyid VARCHAR(50) PRIMARY KEY,
+    facultyid VARCHAR(255) PRIMARY KEY,
     name VARCHAR(100),
     department VARCHAR(100),
     post VARCHAR(100)
@@ -44,8 +46,8 @@ CREATE TABLE faculty_details (
 
 
 CREATE TABLE college_details (
-    studentid VARCHAR(50),
-    facultyid VARCHAR(50),
+    studentid VARCHAR(255),
+    facultyid VARCHAR(255),
     name VARCHAR(100),
     branch VARCHAR(100),
     college VARCHAR(100),
@@ -59,8 +61,8 @@ CREATE TABLE college_details (
 
 
 CREATE TABLE course_table (
-    courseid VARCHAR(50) PRIMARY KEY,
-    facultyid VARCHAR(50),
+    courseid VARCHAR(255) PRIMARY KEY,
+    facultyid VARCHAR(255),
     credits INT,
     course_name VARCHAR(100),
     FOREIGN KEY (facultyid) REFERENCES faculty_details(facultyid)
@@ -69,8 +71,8 @@ CREATE TABLE course_table (
 
 
 CREATE TABLE advisor_table (
-    facultyid VARCHAR(50),
-    studentid VARCHAR(50),
+    facultyid VARCHAR(255),
+    studentid VARCHAR(255),
     PRIMARY KEY (facultyid, studentid),
     FOREIGN KEY (facultyid) REFERENCES faculty_details(facultyid),
     FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid)
@@ -78,8 +80,8 @@ CREATE TABLE advisor_table (
 
 
 CREATE TABLE course_details (
-    studentid VARCHAR(50),
-    courseid VARCHAR(50),
+    studentid VARCHAR(255),
+    courseid VARCHAR(255),
     semester VARCHAR(20),
     marks FLOAT,
     PRIMARY KEY (studentid, courseid),
