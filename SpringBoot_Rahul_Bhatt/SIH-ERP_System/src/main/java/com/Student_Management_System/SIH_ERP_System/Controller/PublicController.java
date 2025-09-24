@@ -1,7 +1,8 @@
 package com.Student_Management_System.SIH_ERP_System.Controller;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.RegisterRequest;
-import com.Student_Management_System.SIH_ERP_System.Services.RegisterStudent;
+import com.Student_Management_System.SIH_ERP_System.Services.AuthRepo_StudentService;
+import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_CollegeDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PublicController {
     @Autowired
-    RegisterStudent registerStudent;
+    AuthRepo_StudentService studentService;
+    @Autowired
+    DataRepo_CollegeDetailsService collegeDetails;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerStudent(@RequestBody RegisterRequest request){
-        return registerStudent.registerStudent(request.getStudent(), request.getStudentCollegeDetails());
+        ResponseEntity<?> response = studentService.register(request.getStudent());
+        collegeDetails.register(request.getStudentCollegeDetails(), studentService.findByStudentid(request.getStudent().getStudentid()));
+        return response;
     }
 }

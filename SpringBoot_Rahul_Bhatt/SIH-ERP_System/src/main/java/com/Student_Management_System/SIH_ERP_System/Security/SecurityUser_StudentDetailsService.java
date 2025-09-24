@@ -1,7 +1,7 @@
 package com.Student_Management_System.SIH_ERP_System.Security;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.Student_Entity;
-import com.Student_Management_System.SIH_ERP_System.Repositories.AuthRepo;
+import com.Student_Management_System.SIH_ERP_System.Repositories.AuthRepo_Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class SecurityUser_StudentDetailsService implements UserDetailsService {
 
     @Autowired
-    AuthRepo repo;
+    AuthRepo_Student repo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
