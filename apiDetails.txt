@@ -1,0 +1,22 @@
+
+## API Endpoints
+
+### **Authentication API **
+
+| Endpoint                 | Method  | Description                      |
+| ------------------------ | ------- | -------------------------------- |
+| `/register`              | **POST** | Register a new user, : Send data in format :  
+                                                                                      {
+                                                                                        "student":{
+                                                                                            "studentid": "60448",
+                                                                                            "password": "rahulbhatt"
+                                                                                            }
+                                                                                        ,"studentCollegeDetails":{
+                                                                                            "name":"Rahul Bhatt",
+                                                                                            "branch":"Computer Engineering",
+                                                                                            "college":"COT",
+                                                                                            "batch":2023,
+                                                                                            "contact":8630984049,
+                                                                                            "email":"rbhatt.cs@gmail.com"
+                                                                                            }
+                                                                                      }
