@@ -5,7 +5,7 @@
 
 | Endpoint                 | Method  | Description                      |
 | ------------------------ | ------- | -------------------------------- |
-| `/register`              | **POST** | Register a new user, : Send data in format :  
+| `/register`              | **POST**| Register a new user, : Send data in format :
                                                                                       {
                                                                                         "student":{
                                                                                             "studentid": "60448",
@@ -20,3 +20,8 @@
                                                                                             "email":"rbhatt.cs@gmail.com"
                                                                                             }
                                                                                       }
+| `/unregisteredStudents`   | **GET** | Get all unapproved Students    |
+| `/approveStudent/{value}` | **PUT** | approve a student : unregistered will have 0 by default then when approved send
+                                        value as 1 or if rejected send value as 2 body of json format : {
+                                                                                                            "studentid":"60448"
+                                                                                                        }
