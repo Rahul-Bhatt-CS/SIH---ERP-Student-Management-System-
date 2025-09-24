@@ -2,7 +2,7 @@ package com.Student_Management_System.SIH_ERP_System.Controller;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.CollegeDetails;
 import com.Student_Management_System.SIH_ERP_System.Services.AuthRepo_StudentService;
-import com.Student_Management_System.SIH_ERP_System.Services.UnregisteredStudents;
+import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_CollegeDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +11,13 @@ import java.util.List;
 @RestController
 public class AdminController {
     @Autowired
-    UnregisteredStudents unregisteredStudents;
+    DataRepo_CollegeDetailsService collegeDetailsService;
     @Autowired
     AuthRepo_StudentService authRepoStudentServiceService;
 
     @GetMapping("/unregisteredStudents")
     public List<CollegeDetails> getDisabled(){
-        return unregisteredStudents.fetchStudents();
+        return collegeDetailsService.unregiestered(authRepoStudentServiceService.unregisteredStudents());
     }
 
     @PutMapping("/approveStudent/{value}")

@@ -7,18 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthRepo_StudentService {
     @Autowired
     AuthRepo_Student repo;
-
-    public String approve(String studentid, int value){
-        repo.update(studentid, value);
-        if(value == 1){
-            return "Approved";
-        }
-        return "Rejected";
-    }
 
     public ResponseEntity<?> register(Student_Entity student){
         if(repo.findByStudentid(student.getStudentid()) == null){
@@ -31,7 +25,23 @@ public class AuthRepo_StudentService {
         return ResponseEntity.badRequest().body("Student Already Registered");
     }
 
-    public Student_Entity findByStudentid(String studentid){
+    public Student_Entity fetchStudent(String studentid){
         return repo.findByStudentid(studentid);
     }
+
+
+    public String approve(String studentid, int value){
+        Student_Entity student = repo.findByStudentid(studentid);
+        student.setEnabled(value);
+        repo.save(student);
+        if(value == 1){
+            return "Approved";
+        }
+        return "Rejected";
+    }
+
+    public List<String> unregisteredStudents(){
+        return repo.findDisabledStudents();
+    }
+
 }
