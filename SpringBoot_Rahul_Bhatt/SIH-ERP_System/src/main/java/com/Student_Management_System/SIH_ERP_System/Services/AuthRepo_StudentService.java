@@ -30,8 +30,8 @@ public class AuthRepo_StudentService {
     }
 
 
-    public String approve(String studentid, int value){
-        Student_Entity student = repo.findByStudentid(studentid);
+    public String approve(Student_Entity studentid, int value){
+        Student_Entity student = repo.findByStudentid(studentid.getStudentid());
         student.setEnabled(value);
         repo.save(student);
         if(value == 1){
