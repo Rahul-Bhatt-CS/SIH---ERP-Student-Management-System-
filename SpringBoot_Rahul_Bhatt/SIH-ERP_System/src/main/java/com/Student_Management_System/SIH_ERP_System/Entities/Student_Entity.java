@@ -3,7 +3,7 @@ package com.Student_Management_System.SIH_ERP_System.Entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "authTable_Students")
+@Table(name = "auth_table_students")
 public class Student_Entity {
     @Id
     private String studentid;

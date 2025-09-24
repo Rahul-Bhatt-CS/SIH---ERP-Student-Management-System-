@@ -1,0 +1,88 @@
+query to create tables:
+
+CREATE TABLE auth_table_students(
+	studentid varchar(255) primary key,
+	enabled int,
+	password varchar(255)
+);
+
+
+CREATE TABLE admin_auth_table(
+	username varchar(255) primary key,
+	password varchar(255)
+);
+
+
+CREATE TABLE misc_details (
+    studentid VARCHAR(50),
+    local_address VARCHAR(255),
+    district VARCHAR(100),
+    state VARCHAR(100),
+    pincode INT,
+    PRIMARY KEY (studentid),
+    FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid)
+);
+
+
+
+CREATE TABLE hostel_details (
+    studentid VARCHAR(50),
+    name_of_hostel VARCHAR(100),
+    room VARCHAR(50),
+    PRIMARY KEY (studentid),
+    FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid)
+);
+
+
+CREATE TABLE faculty_details (
+    facultyid VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100),
+    department VARCHAR(100),
+    post VARCHAR(100)
+);
+
+
+
+CREATE TABLE college_details (
+    studentid VARCHAR(50),
+    facultyid VARCHAR(50),
+    name VARCHAR(100),
+    branch VARCHAR(100),
+    college VARCHAR(100),
+    batch YEAR,
+    contact BIGINT,
+    email VARCHAR(100),
+    PRIMARY KEY (studentid),
+    FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid),
+    FOREIGN KEY (facultyid) REFERENCES faculty_details(facultyid)
+);
+
+
+CREATE TABLE course_table (
+    courseid VARCHAR(50) PRIMARY KEY,
+    facultyid VARCHAR(50),
+    credits INT,
+    course_name VARCHAR(100),
+    FOREIGN KEY (facultyid) REFERENCES faculty_details(facultyid)
+);
+
+
+
+CREATE TABLE advisor_table (
+    facultyid VARCHAR(50),
+    studentid VARCHAR(50),
+    PRIMARY KEY (facultyid, studentid),
+    FOREIGN KEY (facultyid) REFERENCES faculty_details(facultyid),
+    FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid)
+);
+
+
+CREATE TABLE course_details (
+    studentid VARCHAR(50),
+    courseid VARCHAR(50),
+    semester VARCHAR(20),
+    marks FLOAT,
+    PRIMARY KEY (studentid, courseid),
+    FOREIGN KEY (studentid) REFERENCES auth_table_students(studentid),
+    FOREIGN KEY (courseid) REFERENCES course_table(courseid)
+);

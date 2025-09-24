@@ -1,5 +1,8 @@
 package com.Student_Management_System.SIH_ERP_System.Configuration;
 
+import com.Student_Management_System.SIH_ERP_System.Security.SecurityUser_StudentDetailsService;
+import com.Student_Management_System.SIH_ERP_System.Security.SecurityUser_AdminDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,6 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class StudentConfig {
+    @Autowired
+    SecurityUser_AdminDetailsService securityUserAdminDetailsService;
+    @Autowired
+    SecurityUser_StudentDetailsService securityUserStudentDetailsService;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
@@ -21,14 +29,33 @@ public class StudentConfig {
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(r ->
                 r
-                        .requestMatchers(HttpMethod.POST,"/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/test").hasAuthority("STUDENT")
+//                        .requestMatchers(HttpMethod.POST,"/register").permitAll()
+//                        .requestMatchers(HttpMethod.GET,"/test")
+                        .requestMatchers(HttpMethod.GET,"/approveStudents").hasAuthority("ADMIN")
                         .anyRequest()
-                        .authenticated())
+                        .authenticated()
+                )
+                .userDetailsService(securityUserAdminDetailsService)
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(c -> c.disable());
 
+        return http.build();
+    }
+
+
+    @Bean
+    public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests(r ->
+                r
+                        .requestMatchers(HttpMethod.POST,"/register").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/test").hasAuthority("STUDENT")
+                        .anyRequest()
+                        .authenticated()
+                ).userDetailsService(securityUserStudentDetailsService)
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
+                .csrf(c -> c.disable());
         return http.build();
     }
 }
