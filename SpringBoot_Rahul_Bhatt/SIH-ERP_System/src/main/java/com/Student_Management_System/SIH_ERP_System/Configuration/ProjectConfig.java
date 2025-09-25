@@ -35,7 +35,7 @@ public class ProjectConfig {
     @Order(1)
     public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception{
         http
-                .securityMatcher("/register", "/","/student/hostel")
+                .securityMatcher("/api/register", "/","/student/hostel")
                 .authorizeHttpRequests(r ->
                         r
                                 .requestMatchers(HttpMethod.POST,"/register").permitAll()
@@ -47,6 +47,7 @@ public class ProjectConfig {
                 .userDetailsService(securityUserStudentDetailsService)
                 .formLogin(form -> form.disable())
                 .httpBasic(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .csrf(c -> c.disable());
         return http.build();
     }
@@ -65,6 +66,7 @@ public class ProjectConfig {
                 .userDetailsService(securityUserAdminDetailsService)
                 .formLogin(form -> form.disable())
                 .httpBasic(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .csrf(c -> c.disable());
 
         return http.build();
