@@ -17,7 +17,7 @@ public class PublicController {
     @Autowired
     DataRepo_CollegeDetailsService collegeDetails;
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public ResponseEntity<?> registerStudent(@RequestBody RegisterRequest request){
         ResponseEntity<?> response = studentService.register(request.getStudent());
         collegeDetails.register(request.getStudentCollegeDetails(), studentService.fetchStudent(request.getStudent().getStudentid()));
