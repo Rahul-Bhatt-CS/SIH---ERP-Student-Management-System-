@@ -3,18 +3,18 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
+import { loginStudent } from "@/lib/api/student";
 
-export default function StudentLogin() {
+export default function StudentLoginPage() {
   const fields = ["name", "password"];
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <AuthForm
-        role="Student"
-        type="Login"
-        fields={fields}
-        submitEndpoint="/login"
-      />
-    </div>
+    <AuthForm
+      role="Student"
+      type="Login"
+      fields={fields}
+      apiFunction={loginStudent}
+      redirectAfter="/student/dashboard"
+    />
   );
 }

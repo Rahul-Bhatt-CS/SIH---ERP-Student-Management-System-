@@ -1,17 +1,16 @@
 // components/AuthForm.js
+
 "use client";
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { registerStudent, loginStudent } from "@/lib/api/student";
 
-export default function AuthForm({ role, type, fields, submitEndpoint }) {
+export default function AuthForm({ role, type, fields }) {
   const router = useRouter();
   const [formData, setFormData] = useState(
-    fields.reduce((acc, field) => {
-      acc[field] = "";
-      return acc;
-    }, {})
+    fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -27,13 +26,12 @@ export default function AuthForm({ role, type, fields, submitEndpoint }) {
     setError("");
 
     try {
-      // Build payload according to your API
       let payload = {};
 
       if (type === "Register") {
         payload = {
           student: {
-            studentid: "", // No input from user, leave blank or generate if backend requires
+            studentid: "", // backend may generate automatically
             password: formData.password,
           },
           studentCollegeDetails: {
@@ -45,35 +43,19 @@ export default function AuthForm({ role, type, fields, submitEndpoint }) {
             email: formData.email,
           },
         };
+
+        await registerStudent(payload);
+        router.push("/student/login");
       } else {
-        // Login: use studentid as name for now
+        // Login
         payload = {
           student: {
             studentid: formData.name,
             password: formData.password,
           },
         };
-      }
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}${submitEndpoint}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || `${type} failed`);
-      }
-
-      const data = await res.json();
-
-      if (type === "Register") {
-        router.push("/student/login");
-      } else {
+        const data = await loginStudent(payload);
         localStorage.setItem("studentToken", data.token);
         router.push("/student/dashboard");
       }
@@ -85,12 +67,12 @@ export default function AuthForm({ role, type, fields, submitEndpoint }) {
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-900 shadow-2xl rounded-3xl p-6 sm:p-10 md:p-12 lg:p-16 w-full max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl transition-all">
+    <div className="bg-card dark:bg-card shadow-2xl rounded-3xl p-6 sm:p-10 md:p-12 lg:p-16 w-full max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl transition-all">
       <h1 className="text-3xl md:text-4xl font-bold mb-10 text-foreground text-center">
         {role} {type}
       </h1>
 
-      {error && <p className="text-center text-red-500 mb-6">{error}</p>}
+      {error && <p className="text-center text-destructive mb-6">{error}</p>}
 
       <form
         onSubmit={handleSubmit}
@@ -129,7 +111,6 @@ export default function AuthForm({ role, type, fields, submitEndpoint }) {
           </div>
         ))}
 
-        {/* Submit button */}
         <div className="md:col-span-2 mt-4">
           <button
             type="submit"
