@@ -1,4 +1,4 @@
-package com.Student_Management_System.SIH_ERP_System.Security;
+package com.Student_Management_System.SIH_ERP_System.Security.Entity;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.Admin_Entity;
 import org.springframework.security.core.GrantedAuthority;

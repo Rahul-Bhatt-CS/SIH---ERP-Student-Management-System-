@@ -1,7 +1,8 @@
-package com.Student_Management_System.SIH_ERP_System.Security;
+package com.Student_Management_System.SIH_ERP_System.Security.Services;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.Admin_Entity;
 import com.Student_Management_System.SIH_ERP_System.Repositories.AuthRepo_Admin;
+import com.Student_Management_System.SIH_ERP_System.Security.Entity.SecurityUser_Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

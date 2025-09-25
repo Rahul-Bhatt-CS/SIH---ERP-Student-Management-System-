@@ -1,7 +1,7 @@
 package com.Student_Management_System.SIH_ERP_System.Configuration;
 
-import com.Student_Management_System.SIH_ERP_System.Security.SecurityUser_StudentDetailsService;
-import com.Student_Management_System.SIH_ERP_System.Security.SecurityUser_AdminDetailsService;
+import com.Student_Management_System.SIH_ERP_System.Security.Services.SecurityUser_StudentDetailsService;
+import com.Student_Management_System.SIH_ERP_System.Security.Services.SecurityUser_AdminDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
