@@ -12,20 +12,26 @@ import java.util.List;
 @Service
 public class DataRepo_CollegeDetailsService {
     @Autowired
-    DataRepo_CollegeDetails repoCollegeDetails;
+    DataRepo_CollegeDetails CollegeDetailsRepo;
 
     public void register(CollegeDetails details, Student_Entity student){
         details.setStudent(student);
-        repoCollegeDetails.save(details);
+        CollegeDetailsRepo.save(details);
     }
 
-    public List<CollegeDetails> unregiestered(List<String> studentids){
+    public List<CollegeDetails> getSudentDetailsWithList(List<String> studentids){
         List<CollegeDetails> collegeDetails = new ArrayList<CollegeDetails>();
         for (int i = 0; i < studentids.size(); i++){
-            CollegeDetails details = repoCollegeDetails.findByStudentid(studentids.get(i));
+            CollegeDetails details = CollegeDetailsRepo.findByStudentid(studentids.get(i));
             details.setStudent(null);
             collegeDetails.add(details);
         }
         return collegeDetails;
+
+    }
+    public CollegeDetails getSudentDetailsWithId(String studentids){
+        CollegeDetails details = CollegeDetailsRepo.findByStudentid(studentids);
+        details.setStudent(null);
+        return details;
     }
 }
