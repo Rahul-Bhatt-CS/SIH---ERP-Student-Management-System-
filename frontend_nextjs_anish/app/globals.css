@@ -117,13 +117,6 @@
     font-family: var(--font-sans);
   }
 
-  /* Outer container */
-  .outer-bg {
-    @apply relative flex justify-center items-center p-6 sm:p-10 min-h-screen;
-    background: var(--muted);
-    /* static dark gray/neutral background */
-  }
-
   /* Cards */
   .card {
     @apply z-10 relative bg-card shadow-lg rounded-lg text-card-foreground;
