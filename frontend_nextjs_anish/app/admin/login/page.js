@@ -1,4 +1,4 @@
-// app/admin/page.js
+// app/admin/login/page.js
 
 "use client";
 

@@ -13,11 +13,7 @@ import java.util.List;
 @Repository
 public interface AuthRepo_Student extends JpaRepository<Student_Entity, String> {
     Student_Entity findByStudentid(String ID);
+
     @Query(value = "SELECT s.studentid FROM Student_Entity s WHERE s.enabled = 0")
     List<String> findDisabledStudents();
-
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE auth_table_students SET enabled = :status WHERE studentid = :studentid", nativeQuery = true)
-    int update(@Param("studentid")String studentid, @Param("status") int status);
 }

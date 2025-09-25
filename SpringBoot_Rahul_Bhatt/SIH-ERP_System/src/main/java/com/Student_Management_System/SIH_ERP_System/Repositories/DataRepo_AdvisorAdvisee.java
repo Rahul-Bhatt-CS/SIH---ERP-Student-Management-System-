@@ -1,0 +1,10 @@
+package com.Student_Management_System.SIH_ERP_System.Repositories;
+
+import com.Student_Management_System.SIH_ERP_System.Entities.AdvisorId;
+import com.Student_Management_System.SIH_ERP_System.Entities.AdvisorTable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DataRepo_AdvisorAdvisee extends JpaRepository<AdvisorTable, AdvisorId> {
+}

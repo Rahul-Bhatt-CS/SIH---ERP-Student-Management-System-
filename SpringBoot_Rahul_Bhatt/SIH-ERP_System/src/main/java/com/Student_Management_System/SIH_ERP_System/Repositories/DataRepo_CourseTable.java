@@ -1,0 +1,9 @@
+package com.Student_Management_System.SIH_ERP_System.Repositories;
+
+import com.Student_Management_System.SIH_ERP_System.Entities.CourseTable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DataRepo_CourseTable extends JpaRepository<CourseTable, String> {
+}

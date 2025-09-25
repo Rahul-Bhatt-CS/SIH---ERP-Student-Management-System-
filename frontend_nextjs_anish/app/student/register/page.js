@@ -3,17 +3,17 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
+import { registerStudent } from "@/lib/api/student";
 
-export default function StudentRegister() {
+export default function StudentRegisterPage() {
   const fields = [
-    "studentid",
-    "password",
     "name",
     "branch",
     "college",
     "batch",
     "contact",
     "email",
+    "password",
   ];
 
   return (
@@ -21,7 +21,8 @@ export default function StudentRegister() {
       role="Student"
       type="Register"
       fields={fields}
-      submitEndpoint="/register"
+      apiFunction={registerStudent}
+      redirectAfter="/student/login"
     />
   );
 }
