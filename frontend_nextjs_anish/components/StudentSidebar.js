@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import { X } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
 
 export default function StudentSidebar({ sidebarOpen, setSidebarOpen }) {
   const navLinks = [

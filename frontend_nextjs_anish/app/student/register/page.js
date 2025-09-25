@@ -6,22 +6,23 @@ import AuthForm from "@/components/AuthForm";
 
 export default function StudentRegister() {
   const fields = [
-    "studentid",
-    "password",
     "name",
+    "email",
     "branch",
     "college",
     "batch",
     "contact",
-    "email",
+    "password",
   ];
 
   return (
-    <AuthForm
-      role="Student"
-      type="Register"
-      fields={fields}
-      submitEndpoint="/register"
-    />
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <AuthForm
+        role="Student"
+        type="Register"
+        fields={fields}
+        submitEndpoint="/register"
+      />
+    </div>
   );
 }
