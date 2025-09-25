@@ -20,6 +20,7 @@ public class StudentController {
     @PostMapping("/student/hostel")
     public ResponseEntity<?> registerHostel(@RequestBody HostelDetails details){
         Student_Entity student = studentService.fetchStudent(details.getStudentid());
+        System.out.println(details.getStudentid());
         details.setStudent(student);
         return hostelDetailsService.registerHostel(details);
     }

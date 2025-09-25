@@ -35,11 +35,12 @@ public class ProjectConfig {
     @Order(1)
     public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception{
         http
-                .securityMatcher("/register", "/")
+                .securityMatcher("/register", "/","/student/hostel")
                 .authorizeHttpRequests(r ->
                         r
                                 .requestMatchers(HttpMethod.POST,"/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/").hasAuthority("STUDENT")
+                                .requestMatchers(HttpMethod.POST,"/student/hostel").hasAuthority("STUDENT")
                                 .anyRequest()
                                 .authenticated()
                 )
