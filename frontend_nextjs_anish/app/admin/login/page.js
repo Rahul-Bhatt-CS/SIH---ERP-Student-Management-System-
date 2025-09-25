@@ -2,24 +2,28 @@
 
 "use client";
 
-import LoginForm from "@/components/LoginForm"; // import your existing login component
-import { useRouter } from "next/navigation";
+import AuthForm from "@/components/AuthForm";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
+  const fields = ["name", "password"];
 
-  const handleLoginSuccess = (user) => {
-    // You can check if the user role is admin
-    if (user.role === "admin") {
-      router.push("/admin/dashboard");
+  // For Admin, we'll handle login logic inside AuthForm or via a placeholder API function
+  const fakeAdminLogin = async ({ student }) => {
+    // Hardcoded admin credentials
+    if (student.studentid === "admin" && student.password === "admin123") {
+      return { token: "admin-token" }; // fake token
     } else {
-      alert("You are not authorized to access the admin dashboard.");
+      throw new Error("Invalid admin credentials");
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900">
-      <LoginForm onSuccess={handleLoginSuccess} />
-    </div>
+    <AuthForm
+      role="Admin"
+      type="Login"
+      fields={fields}
+      apiFunction={fakeAdminLogin}
+      redirectAfter="/admin/dashboard"
+    />
   );
 }

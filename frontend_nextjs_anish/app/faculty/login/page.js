@@ -1,14 +1,20 @@
-import AuthForm from "@/components/AuthForm";
+// app/faculty/login/page.js
 
-export default function FacultyLogin() {
-  const fields = ["email", "password"];
+"use client";
+
+import AuthForm from "@/components/AuthForm";
+import { loginFaculty } from "@/lib/api/faculty";
+
+export default function FacultyLoginPage() {
+  const fields = ["name", "password"]; // name = faculty ID
 
   return (
     <AuthForm
       role="Faculty"
       type="Login"
       fields={fields}
-      submitEndpoint="/faculty/login"
+      apiFunction={loginFaculty}
+      redirectAfter="/faculty/dashboard"
     />
   );
 }
