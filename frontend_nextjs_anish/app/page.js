@@ -9,7 +9,7 @@ export default function Home() {
     {
       role: "Student",
       description: "Access your courses, dashboard, and personal profile.",
-      link: "/student",
+      link: "/student/login",
       icon: <GraduationCap className="w-12 h-12 mx-auto mb-4 text-blue-400" />,
       cardClasses: "border-blue-400 group",
       titleColor: "text-blue-400 group-hover:text-blue-300",
@@ -19,7 +19,7 @@ export default function Home() {
     {
       role: "Faculty",
       description: "Manage classes, track student progress, and access tools.",
-      link: "/faculty",
+      link: "/faculty/login",
       icon: <User className="w-12 h-12 mx-auto mb-4 text-green-400" />,
       cardClasses: "border-green-400 group",
       titleColor: "text-green-400 group-hover:text-green-300",
@@ -30,7 +30,7 @@ export default function Home() {
       role: "Librarian",
       description:
         "Manage books, track inventory, and assist users efficiently.",
-      link: "/librarian",
+      link: "/librarian/login",
       icon: <Book className="w-12 h-12 mx-auto mb-4 text-purple-400" />,
       cardClasses: "border-purple-400 group",
       titleColor: "text-purple-400 group-hover:text-purple-300",

@@ -33,15 +33,14 @@ student-erp-frontend/
 │  ├─ ThemeToggle.js               # Dark/Light mode toggle
 │  ├─ DashboardStats.js            # Stats cards with animated counters
 │  ├─ HowItWorks.js                # How It Works step cards
-│  ├─ ProtectedRoute.js            # Secure pages based on roles
-│  └─ AuthProvider.js              # Context Provider for auth & roles
+│  └─ AuthForm.js                  # Auth form for register, login
 │
 ├─ lib/
 │  ├─ api/                         # All API requests organized by module
 │  │  ├─ student.js                # Student-related APIs (approve, fetch, etc.)
-│  │  ├─faculty.js                # Faculty-specific APIs (courses, exams, etc.)
+│  │  ├─ faculty.js                # Faculty-specific APIs (courses, exams, etc.)
 |  |  ├─ librarian.js              # Librarian-specific APIs 
-│  │  └─admin.js                  # Admin-specific APIs (dashboard stats, user approval)
+│  │  └─ admin.js                  # Admin-specific APIs (dashboard stats, user approval)
 │  └─ utils.js                     # Utility functions (date formatting, validation)
 │
 ├─ styles/

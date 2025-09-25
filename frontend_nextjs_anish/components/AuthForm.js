@@ -21,9 +21,8 @@ export default function AuthForm({
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (field, value) => {
+  const handleChange = (field, value) =>
     setFormData({ ...formData, [field]: value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,59 +33,80 @@ export default function AuthForm({
       let payload = {};
 
       if (type === "Register") {
-        if (role.toLowerCase() === "student") {
-          payload = {
-            student: { studentid: "", password: formData.password },
-            studentCollegeDetails: {
-              name: formData.name,
-              branch: formData.branch,
-              college: formData.college,
-              batch: Number(formData.batch),
-              contact: Number(formData.contact),
-              email: formData.email,
-            },
-          };
-        } else if (role.toLowerCase() === "faculty") {
-          payload = {
-            faculty: {
-              name: formData.name,
-              department: formData.department,
-              college: formData.college,
-              contact: Number(formData.contact),
-              email: formData.email,
-              password: formData.password,
-            },
-          };
-        } else if (role.toLowerCase() === "librarian") {
-          payload = {
-            librarian: {
-              name: formData.name,
-              branch: formData.branch,
-              college: formData.college,
-              contact: Number(formData.contact),
-              email: formData.email,
-              password: formData.password,
-            },
-          };
+        // Register payloads
+        switch (role.toLowerCase()) {
+          case "student":
+            payload = {
+              student: {
+                studentid: formData.studentid,
+                password: formData.password,
+              },
+              studentCollegeDetails: {
+                name: formData.name,
+                branch: formData.branch,
+                college: formData.college,
+                batch: Number(formData.batch),
+                contact: Number(formData.contact),
+                email: formData.email,
+              },
+            };
+            break;
+
+          case "faculty":
+            payload = {
+              faculty: {
+                name: formData.name,
+                department: formData.department,
+                college: formData.college,
+                contact: Number(formData.contact),
+                email: formData.email,
+                password: formData.password,
+              },
+            };
+            break;
+
+          case "librarian":
+            payload = {
+              librarian: {
+                name: formData.name,
+                branch: formData.branch,
+                college: formData.college,
+                contact: Number(formData.contact),
+                email: formData.email,
+                password: formData.password,
+              },
+            };
+            break;
         }
       } else {
-        // Login
-        if (role.toLowerCase() === "student") {
-          payload = {
-            student: { studentid: formData.name, password: formData.password },
-          };
-        } else if (role.toLowerCase() === "faculty") {
-          payload = {
-            faculty: { email: formData.email, password: formData.password },
-          };
-        } else if (role.toLowerCase() === "librarian") {
-          payload = {
-            librarian: { email: formData.email, password: formData.password },
-          };
-        } else if (role.toLowerCase() === "admin") {
-          payload = {
-            admin: { name: formData.name, password: formData.password },
-          };
+        // Login payloads
+        switch (role.toLowerCase()) {
+          case "student":
+            payload = {
+              student: {
+                studentid: formData.studentid,
+                password: formData.password,
+              },
+            };
+            break;
+
+          case "faculty":
+            payload = {
+              faculty: { email: formData.email, password: formData.password },
+            };
+            break;
+
+          case "librarian":
+            payload = {
+              librarian: { email: formData.email, password: formData.password },
+            };
+            break;
+
+          case "admin":
+            payload = {
+              admin: { name: formData.name, password: formData.password },
+            };
+            break;
         }
       }
 
@@ -133,6 +153,17 @@ export default function AuthForm({
                 value={formData[field]}
                 onChange={(e) => handleChange(field, e.target.value)}
                 placeholder={`Enter your ${field}`}
+                autoComplete={
+                  field === "password"
+                    ? type === "Login"
+                      ? "current-password"
+                      : "new-password"
+                    : field === "email"
+                    ? "email"
+                    : field === "contact"
+                    ? "tel"
+                    : "name"
+                }
                 className={`px-4 py-3 md:py-4 rounded-lg border border-border bg-input text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all ${
                   field === "password" ? "pr-10" : ""
                 }`}
