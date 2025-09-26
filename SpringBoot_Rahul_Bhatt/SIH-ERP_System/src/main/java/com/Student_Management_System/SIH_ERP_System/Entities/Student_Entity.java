@@ -28,6 +28,16 @@ public class Student_Entity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CourseDetails> courses;
 
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private FeeDetails feeDetails;
+
+    public FeeDetails getFeeDetails() {
+        return feeDetails;
+    }
+
+    public void setFeeDetails(FeeDetails feeDetails) {
+        this.feeDetails = feeDetails;
+    }
 
     public String getsId() {
         return sId;

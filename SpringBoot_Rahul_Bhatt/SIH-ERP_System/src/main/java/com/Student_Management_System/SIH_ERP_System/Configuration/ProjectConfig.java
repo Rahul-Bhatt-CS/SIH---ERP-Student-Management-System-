@@ -58,8 +58,9 @@ public class ProjectConfig {
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(r ->
                 r
-                        .requestMatchers(HttpMethod.GET,"/unregisteredStudents").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/approveStudent/*").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/admin/students").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/admin/approve").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/register/admin").permitAll()
                         .anyRequest()
                         .authenticated()
                 )

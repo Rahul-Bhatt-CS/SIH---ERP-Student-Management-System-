@@ -30,14 +30,14 @@ public class AuthRepo_StudentService {
     }
 
 
-    public String approve(Student_Entity studentid, int value){
+    public ResponseEntity<?> approve(Student_Entity studentid, int value){
         Student_Entity student = repo.findBySId(studentid.getsId());
         student.setRegistered(value);
         repo.save(student);
         if(value == 1){
-            return "Approved";
+            return ResponseEntity.ok("Student Approved");
         }
-        return "Rejected";
+        return ResponseEntity.ok("Student Rejected");
     }
 
     public List<String> unregisteredStudents(){
