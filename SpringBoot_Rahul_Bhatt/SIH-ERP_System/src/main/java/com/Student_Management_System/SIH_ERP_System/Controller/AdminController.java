@@ -33,7 +33,7 @@ public class AdminController {
 
         return StudentsCollegeDetails;
     }
-    @PutMapping("/api/admin/student")
+    @PutMapping("/api/admin/students")
     public String approve(@RequestParam String status,@RequestParam String studentId) {
         Integer a;
         if ("setStatus".equalsIgnoreCase(status)) a = 1;
