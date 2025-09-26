@@ -4,10 +4,21 @@ import { fetchWithAuth } from "@/utils/auth";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Helper to safely parse JSON
+async function safeJson(res) {
+  const text = await res.text();
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch {
+    return {};
+  }
+}
+
 // Faculty registration
 export async function registerFaculty(data) {
   try {
-    return await fetchWithAuth(
+    console.log("📦 Faculty registration payload:", data);
+    const res = await fetchWithAuth(
       `${API_BASE}/api/faculty/register`,
       {
         method: "POST",
@@ -16,7 +27,11 @@ export async function registerFaculty(data) {
       },
       "faculty"
     );
+
+    console.log("✅ Faculty registration response:", res);
+    return res;
   } catch (err) {
+    console.error("🚨 Faculty registration error:", err);
     throw err;
   }
 }
@@ -24,21 +39,26 @@ export async function registerFaculty(data) {
 // Get all students (faculty dashboard)
 export async function getAllStudents() {
   try {
-    return await fetchWithAuth(
+    console.log("📦 Fetching all students for faculty");
+    const res = await fetchWithAuth(
       `${API_BASE}/api/faculty/students`,
-      {
-        method: "GET",
-      },
+      { method: "GET" },
       "faculty"
     );
+
+    console.log("✅ Faculty students response:", res);
+    return res;
   } catch (err) {
+    console.error("🚨 Error fetching faculty students:", err);
     throw err;
   }
 }
 
-// Login (optional, can use AuthForm directly)
-export async function loginFaculty(email, password) {
+// Faculty login
+export async function loginFaculty(data) {
   try {
+    console.log("📦 Faculty login payload:", data);
+    const { email, password } = data;
     const basicAuth = btoa(`${email}:${password}`);
     localStorage.setItem("facultyToken", basicAuth);
     localStorage.setItem("role", "faculty");
@@ -53,12 +73,15 @@ export async function loginFaculty(email, password) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message || "Login failed");
+      const errData = await safeJson(res);
+      throw new Error(errData.message || "Login failed");
     }
 
-    return await res.json();
+    const json = await safeJson(res);
+    console.log("✅ Faculty login response:", json);
+    return json;
   } catch (err) {
+    console.error("🚨 Faculty login error:", err);
     throw err;
   }
 }

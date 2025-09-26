@@ -4,10 +4,21 @@ import { fetchWithAuth } from "@/utils/auth";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Helper to safely parse JSON
+async function safeJson(res) {
+  const text = await res.text();
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch {
+    return {};
+  }
+}
+
 // Librarian registration
 export async function registerLibrarian(data) {
   try {
-    return await fetchWithAuth(
+    console.log("📦 Librarian registration payload:", data);
+    const res = await fetchWithAuth(
       `${API_BASE}/api/librarian/register`,
       {
         method: "POST",
@@ -16,7 +27,10 @@ export async function registerLibrarian(data) {
       },
       "librarian"
     );
+    console.log("✅ Librarian registration response:", res);
+    return res;
   } catch (err) {
+    console.error("🚨 Librarian registration error:", err);
     throw err;
   }
 }
@@ -24,21 +38,25 @@ export async function registerLibrarian(data) {
 // Get all books
 export async function getAllBooks() {
   try {
-    return await fetchWithAuth(
+    console.log("📦 Fetching all books for librarian");
+    const res = await fetchWithAuth(
       `${API_BASE}/api/librarian/books`,
-      {
-        method: "GET",
-      },
+      { method: "GET" },
       "librarian"
     );
+    console.log("✅ Librarian books response:", res);
+    return res;
   } catch (err) {
+    console.error("🚨 Error fetching books:", err);
     throw err;
   }
 }
 
-// Login (optional)
-export async function loginLibrarian(email, password) {
+// Librarian login
+export async function loginLibrarian(data) {
   try {
+    console.log("📦 Librarian login payload:", data);
+    const { email, password } = data;
     const basicAuth = btoa(`${email}:${password}`);
     localStorage.setItem("librarianToken", basicAuth);
     localStorage.setItem("role", "librarian");
@@ -53,12 +71,15 @@ export async function loginLibrarian(email, password) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message || "Login failed");
+      const errData = await safeJson(res);
+      throw new Error(errData.message || "Login failed");
     }
 
-    return await res.json();
+    const json = await safeJson(res);
+    console.log("✅ Librarian login response:", json);
+    return json;
   } catch (err) {
+    console.error("🚨 Librarian login error:", err);
     throw err;
   }
 }

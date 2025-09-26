@@ -3,7 +3,7 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
-// import { registerFaculty } from "@/lib/api/faculty";
+import { registerFaculty } from "@/lib/api/faculty";
 
 export default function FacultyRegisterPage() {
   const fields = [
@@ -20,7 +20,7 @@ export default function FacultyRegisterPage() {
       role="Faculty"
       type="Register"
       fields={fields}
-      // apiFunction={registerFaculty}
+      apiFunction={registerFaculty}
       redirectAfter="/faculty/login"
     />
   );

@@ -6,8 +6,7 @@ import AuthForm from "@/components/AuthForm";
 import { loginFaculty } from "@/lib/api/faculty";
 
 export default function FacultyLoginPage() {
-  const fields = ["name", "password"]; // name = faculty ID
-
+  const fields = ["name", "password"];
   return (
     <AuthForm
       role="Faculty"

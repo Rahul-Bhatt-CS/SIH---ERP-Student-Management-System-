@@ -3,7 +3,7 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
-// import { registerLibrarian } from "@/lib/api/librarian";
+import { registerLibrarian } from "@/lib/api/librarian";
 
 export default function LibrarianRegisterPage() {
   const fields = ["name", "college", "email", "contact", "password"];
@@ -13,7 +13,7 @@ export default function LibrarianRegisterPage() {
       role="Librarian"
       type="Register"
       fields={fields}
-      // apiFunction={registerLibrarian}
+      apiFunction={registerLibrarian}
       redirectAfter="/librarian/login"
     />
   );

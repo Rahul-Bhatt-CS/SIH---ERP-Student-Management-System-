@@ -3,7 +3,7 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
-// import { registerAdmin } from "@/lib/api/admin";
+import { registerAdmin } from "@/lib/api/admin";
 
 export default function AdminRegisterPage() {
   const fields = ["username", "password"];
@@ -13,7 +13,7 @@ export default function AdminRegisterPage() {
       role="Faculty"
       type="Register"
       fields={fields}
-      // apiFunction={registerAdmin}
+      apiFunction={registerAdmin}
       redirectAfter="/admin/login"
     />
   );

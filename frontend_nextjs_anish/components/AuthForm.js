@@ -5,9 +5,14 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { fetchWithAuth } from "@/utils/auth";
 
-export default function AuthForm({ role, type, fields, redirectAfter }) {
+export default function AuthForm({
+  role,
+  type,
+  fields,
+  redirectAfter,
+  apiFunction, // unified API function for login/register
+}) {
   const router = useRouter();
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
@@ -27,145 +32,28 @@ export default function AuthForm({ role, type, fields, redirectAfter }) {
     setSuccessMessage("");
 
     try {
-      let url = "";
-      let payload = {};
-      const method = "POST";
-
-      // Registration
-      if (type === "Register") {
-        switch (role.toLowerCase()) {
-          case "student":
-            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register`;
-            payload = {
-              student: {
-                sId: formData.studentid,
-                password: formData.password,
-              },
-              studentCollegeDetails: {
-                name: formData.name,
-                branch: formData.branch,
-                college: formData.college,
-                batch: Number(formData.batch),
-                contact: Number(formData.contact),
-                email: formData.email,
-              },
-            };
-
-            const resStudent = await fetch(url, {
-              method,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            });
-
-            if (!resStudent.ok) {
-              const errData = await resStudent.json().catch(() => ({}));
-              throw new Error(errData.message || "Student registration failed");
-            }
-
-            setSuccessMessage("Registration successful!");
-            setFormData(
-              fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
-            );
-            return;
-
-          case "admin":
-            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register/admin`;
-            payload = {
-              username: formData.username,
-              password: formData.password,
-            };
-            break;
-
-          case "faculty":
-          case "librarian":
-            url = `/api/${role.toLowerCase()}/register`;
-            payload =
-              role.toLowerCase() === "faculty"
-                ? {
-                    faculty: {
-                      name: formData.name,
-                      department: formData.department,
-                      college: formData.college,
-                      contact: Number(formData.contact),
-                      email: formData.email,
-                      password: formData.password,
-                    },
-                  }
-                : {
-                    librarian: {
-                      name: formData.name,
-                      branch: formData.branch,
-                      college: formData.college,
-                      contact: Number(formData.contact),
-                      email: formData.email,
-                      password: formData.password,
-                    },
-                  };
-            break;
-        }
-
-        if (role.toLowerCase() !== "student") {
-          await fetchWithAuth(
-            url,
-            {
-              method,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            },
-            role
-          );
-          setSuccessMessage("Registration successful!");
-          setFormData(
-            fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
-          );
-        }
+      if (!apiFunction || typeof apiFunction !== "function") {
+        throw new Error("No apiFunction provided to AuthForm");
       }
 
-      // Login
-      else {
-        switch (role.toLowerCase()) {
-          case "student":
-            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/student/login`;
-            payload = {
-              studentid: formData.studentid,
-              password: formData.password,
-            };
-            console.log(formData.studentid, formData.password);
+      console.log(`Submitting ${type} form for role: ${role}`);
+      console.log("📦 Payload:", formData);
 
-            break;
-          case "admin":
-            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/login`;
-            payload = {
-              username: formData.username,
-              password: formData.password,
-            };
-            break;
-          case "faculty":
-          case "librarian":
-            url = `/api/${role.toLowerCase()}/login`;
-            payload = { email: formData.email, password: formData.password };
-            break;
-        }
+      // Call API function with the form data object
+      const res = await apiFunction(formData);
+      console.log("✅ API response:", res);
 
-        const resLogin = await fetch(url, {
-          method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+      // Success handling
+      setSuccessMessage(`${type} successful!`);
+      setFormData(fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {}));
 
-        if (!resLogin.ok) {
-          const errData = await resLogin.json().catch(() => ({}));
-          throw new Error(errData.message || "Login failed");
-        }
+      // Save role to localStorage
+      localStorage.setItem("role", role.toLowerCase());
 
-        setSuccessMessage("Login successful!");
-        setFormData(
-          fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
-        );
-        localStorage.setItem("role", role.toLowerCase());
-        router.push(redirectAfter);
-      }
+      // Redirect after success
+      router.push(redirectAfter);
     } catch (err) {
+      console.error("🚨 Error during API call:", err);
       setError(err.message || `${type} failed`);
     } finally {
       setLoading(false);
@@ -247,7 +135,7 @@ export default function AuthForm({ role, type, fields, redirectAfter }) {
 
         <p className="mt-6 text-sm text-muted-foreground text-center">
           {type === "Login" ? (
-            role.toLowerCase() !== "admin" ? (
+            role.toLowerCase() !== "admin" && (
               <>
                 Don’t have an account?{" "}
                 <a
@@ -257,7 +145,7 @@ export default function AuthForm({ role, type, fields, redirectAfter }) {
                   Register
                 </a>
               </>
-            ) : null
+            )
           ) : (
             <>
               Already have an account?{" "}

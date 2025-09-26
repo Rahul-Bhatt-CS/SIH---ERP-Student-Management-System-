@@ -3,34 +3,34 @@
 // Hardcoded Basic Auth for student registration
 export const STUDENT_REG_CREDS = btoa("60448:rahulbhatt"); // example sId:password
 
-// Login with role-based credentials
-export const login = async (username, password, role) => {
-  try {
-    const basicAuth = btoa(`${username}:${password}`);
+//  Login with role-based credentials
+// export const login = async (username, password, role) => {
+//   try {
+//     const basicAuth = btoa(`${username}:${password}`);
 
-    const res = await fetch(`/api/${role.toLowerCase()}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+//     const res = await fetch(`/api/${role.toLowerCase()}/login`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ username, password }),
+//     });
 
-    if (!res.ok) {
-      const error = await res.json().catch(() => ({}));
-      throw new Error(error.message || "Login failed");
-    }
+//     if (!res.ok) {
+//       const error = await res.json().catch(() => ({}));
+//       throw new Error(error.message || "Login failed");
+//     }
 
-    // Store Basic Auth and role for future requests
-    localStorage.setItem("basicAuth", basicAuth);
-    localStorage.setItem("role", role.toLowerCase());
+//     // Store Basic Auth and role for future requests
+//     localStorage.setItem("basicAuth", basicAuth);
+//     localStorage.setItem("role", role.toLowerCase());
 
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
+//     return await res.json();
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };
 
 // Fetch wrapper that automatically sends Basic Auth
 export const fetchWithAuth = async (url, options = {}) => {
