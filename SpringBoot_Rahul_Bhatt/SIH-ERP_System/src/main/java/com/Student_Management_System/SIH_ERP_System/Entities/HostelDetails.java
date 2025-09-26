@@ -5,34 +5,28 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "hostel_details")
 public class HostelDetails {
-    @Id
-    private String sId;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "sid")
-    private Student_Entity student;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // unique id per record
+    private Long id;
 
     private String nameOfHostel;
     private String room;
     private String sem;
     private String year;
 
+    // Many hostel entries can belong to one student
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "s_id", referencedColumnName = "sId")
+    private Student_Entity student;
 
-    public String getsId() {
-        return sId;
+    // Getters and setters
+    public Long getId() {
+        return id;
     }
 
-    public void setsId(String sId) {
-        this.sId = sId;
-    }
-
-    public Student_Entity getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student_Entity student) {
-        this.student = student;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNameOfHostel() {
@@ -65,5 +59,13 @@ public class HostelDetails {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public Student_Entity getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student_Entity student) {
+        this.student = student;
     }
 }
