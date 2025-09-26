@@ -5,20 +5,16 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { fetchWithAuth } from "@/utils/auth";
 
-export default function AuthForm({
-  role,
-  type,
-  fields,
-  apiFunction,
-  redirectAfter,
-}) {
+export default function AuthForm({ role, type, fields, redirectAfter }) {
   const router = useRouter();
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (field, value) =>
@@ -28,12 +24,16 @@ export default function AuthForm({
     e.preventDefault();
     setLoading(true);
     setError("");
+    setSuccessMessage("");
 
     try {
       let payload = {};
+      let url = "";
+      let method = "POST";
 
+      // Prepare payload and endpoint based on type and role
       if (type === "Register") {
-        // Register payloads
+        url = `/api/${role.toLowerCase()}/register`;
         switch (role.toLowerCase()) {
           case "student":
             payload = {
@@ -51,7 +51,6 @@ export default function AuthForm({
               },
             };
             break;
-
           case "faculty":
             payload = {
               faculty: {
@@ -64,7 +63,6 @@ export default function AuthForm({
               },
             };
             break;
-
           case "librarian":
             payload = {
               librarian: {
@@ -79,44 +77,53 @@ export default function AuthForm({
             break;
         }
       } else {
-        // Login payloads
+        // Login
+        url = `/api/${role.toLowerCase()}/login`;
+        let username, password;
         switch (role.toLowerCase()) {
           case "student":
-            payload = {
-              student: {
-                studentid: formData.studentid,
-                password: formData.password,
-              },
-            };
+            username = formData.studentid;
+            password = formData.password;
+            payload = { studentid: username, password };
             break;
-
           case "faculty":
-            payload = {
-              faculty: { email: formData.email, password: formData.password },
-            };
-            break;
-
           case "librarian":
-            payload = {
-              librarian: { email: formData.email, password: formData.password },
-            };
+            username = formData.email;
+            password = formData.password;
+            payload = { email: username, password };
             break;
-
           case "admin":
-            payload = {
-              admin: { name: formData.name, password: formData.password },
-            };
+            username = formData.name;
+            password = formData.password;
+            payload = { name: username, password };
             break;
         }
+
+        // Store Basic Auth per role
+        const basicAuth = btoa(`${username}:${password}`);
+        localStorage.setItem(`${role.toLowerCase()}Token`, basicAuth);
+        localStorage.setItem("role", role);
       }
 
-      const data = await apiFunction(payload);
+      // Make request
+      const data = await fetchWithAuth(
+        url,
+        {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+        role
+      );
 
-      if (type === "Login" && data?.token) {
-        localStorage.setItem(`${role.toLowerCase()}Token`, data.token);
+      if (type === "Register") {
+        setSuccessMessage("Registration successful!");
+        setFormData(
+          fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
+        );
+      } else {
+        router.push(redirectAfter);
       }
-
-      router.push(redirectAfter);
     } catch (err) {
       setError(err.message || `${type} failed`);
     } finally {
@@ -127,11 +134,14 @@ export default function AuthForm({
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background dark:bg-background transition-colors duration-300">
       <div className="card shadow-2xl rounded-3xl p-6 sm:p-10 md:p-12 lg:p-16 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl animate-fadeIn">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-foreground">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">
           {role} {type}
         </h1>
 
-        {error && <p className="text-center text-destructive mb-6">{error}</p>}
+        {error && <p className="text-center text-destructive mb-4">{error}</p>}
+        {successMessage && (
+          <p className="text-center text-success mb-4">{successMessage}</p>
+        )}
 
         <form
           onSubmit={handleSubmit}
