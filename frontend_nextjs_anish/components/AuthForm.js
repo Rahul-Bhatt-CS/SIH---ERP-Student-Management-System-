@@ -27,18 +27,18 @@ export default function AuthForm({ role, type, fields, redirectAfter }) {
     setSuccessMessage("");
 
     try {
-      let payload = {};
       let url = "";
-      let method = "POST";
+      let payload = {};
+      const method = "POST";
 
-      // Prepare payload and endpoint based on type and role
+      // Registration
       if (type === "Register") {
-        url = `/api/${role.toLowerCase()}/register`;
         switch (role.toLowerCase()) {
           case "student":
+            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register`;
             payload = {
               student: {
-                studentid: formData.studentid,
+                sId: formData.studentid,
                 password: formData.password,
               },
               studentCollegeDetails: {
@@ -50,78 +50,119 @@ export default function AuthForm({ role, type, fields, redirectAfter }) {
                 email: formData.email,
               },
             };
-            break;
-          case "faculty":
-            payload = {
-              faculty: {
-                name: formData.name,
-                department: formData.department,
-                college: formData.college,
-                contact: Number(formData.contact),
-                email: formData.email,
-                password: formData.password,
-              },
-            };
-            break;
-          case "librarian":
-            payload = {
-              librarian: {
-                name: formData.name,
-                branch: formData.branch,
-                college: formData.college,
-                contact: Number(formData.contact),
-                email: formData.email,
-                password: formData.password,
-              },
-            };
-            break;
-        }
-      } else {
-        // Login
-        url = `/api/${role.toLowerCase()}/login`;
-        let username, password;
-        switch (role.toLowerCase()) {
-          case "student":
-            username = formData.studentid;
-            password = formData.password;
-            payload = { studentid: username, password };
-            break;
-          case "faculty":
-          case "librarian":
-            username = formData.email;
-            password = formData.password;
-            payload = { email: username, password };
-            break;
+
+            const resStudent = await fetch(url, {
+              method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (!resStudent.ok) {
+              const errData = await resStudent.json().catch(() => ({}));
+              throw new Error(errData.message || "Student registration failed");
+            }
+
+            setSuccessMessage("Registration successful!");
+            setFormData(
+              fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
+            );
+            return;
+
           case "admin":
-            username = formData.name;
-            password = formData.password;
-            payload = { name: username, password };
+            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register/admin`;
+            payload = {
+              username: formData.username,
+              password: formData.password,
+            };
+            break;
+
+          case "faculty":
+          case "librarian":
+            url = `/api/${role.toLowerCase()}/register`;
+            payload =
+              role.toLowerCase() === "faculty"
+                ? {
+                    faculty: {
+                      name: formData.name,
+                      department: formData.department,
+                      college: formData.college,
+                      contact: Number(formData.contact),
+                      email: formData.email,
+                      password: formData.password,
+                    },
+                  }
+                : {
+                    librarian: {
+                      name: formData.name,
+                      branch: formData.branch,
+                      college: formData.college,
+                      contact: Number(formData.contact),
+                      email: formData.email,
+                      password: formData.password,
+                    },
+                  };
             break;
         }
 
-        // Store Basic Auth per role
-        const basicAuth = btoa(`${username}:${password}`);
-        localStorage.setItem(`${role.toLowerCase()}Token`, basicAuth);
-        localStorage.setItem("role", role);
+        if (role.toLowerCase() !== "student") {
+          await fetchWithAuth(
+            url,
+            {
+              method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+            role
+          );
+          setSuccessMessage("Registration successful!");
+          setFormData(
+            fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
+          );
+        }
       }
 
-      // Make request
-      const data = await fetchWithAuth(
-        url,
-        {
+      // Login
+      else {
+        switch (role.toLowerCase()) {
+          case "student":
+            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/student/login`;
+            payload = {
+              studentid: formData.studentid,
+              password: formData.password,
+            };
+            console.log(formData.studentid, formData.password);
+
+            break;
+          case "admin":
+            url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/login`;
+            payload = {
+              username: formData.username,
+              password: formData.password,
+            };
+            break;
+          case "faculty":
+          case "librarian":
+            url = `/api/${role.toLowerCase()}/login`;
+            payload = { email: formData.email, password: formData.password };
+            break;
+        }
+
+        const resLogin = await fetch(url, {
           method,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        },
-        role
-      );
+        });
 
-      if (type === "Register") {
-        setSuccessMessage("Registration successful!");
+        if (!resLogin.ok) {
+          const errData = await resLogin.json().catch(() => ({}));
+          throw new Error(errData.message || "Login failed");
+        }
+
+        setSuccessMessage("Login successful!");
         setFormData(
           fields.reduce((acc, field) => ({ ...acc, [field]: "" }), {})
         );
-      } else {
+        localStorage.setItem("role", role.toLowerCase());
         router.push(redirectAfter);
       }
     } catch (err) {
