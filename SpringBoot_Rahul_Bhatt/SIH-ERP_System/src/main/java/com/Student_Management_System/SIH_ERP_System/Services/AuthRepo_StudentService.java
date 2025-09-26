@@ -15,10 +15,10 @@ public class AuthRepo_StudentService {
     AuthRepo_Student repo;
 
     public ResponseEntity<?> register(Student_Entity student){
-        if(repo.findByStudentid(student.getStudentid()) == null){
+        if(repo.findBySId(student.getsId()) == null){
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
             student.setPassword(encoder.encode(student.getPassword()));
-            student.setEnabled(0);
+            student.setRegistered(0);
             System.out.println(student);
             return ResponseEntity.ok(repo.save(student));
         }
@@ -26,13 +26,13 @@ public class AuthRepo_StudentService {
     }
 
     public Student_Entity fetchStudent(String studentid){
-        return repo.findByStudentid(studentid);
+        return repo.findBySId(studentid);
     }
 
 
     public String setStatus(String studentid, int value){
-        Student_Entity student = repo.findByStudentid(studentid);
-        student.setEnabled(value);
+        Student_Entity student = repo.findBySId(studentid);
+        student.setRegistered(value);
         repo.save(student);
         if(value == 1){
             return "Approved";

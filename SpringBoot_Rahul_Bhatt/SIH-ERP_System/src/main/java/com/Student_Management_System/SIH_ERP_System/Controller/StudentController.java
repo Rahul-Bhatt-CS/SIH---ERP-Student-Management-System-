@@ -15,10 +15,9 @@ public class StudentController {
     @Autowired
     DataRepo_HostelDetailsService hostelDetailsService;
 
-    @PostMapping("api/student/hostel")
-    public ResponseEntity<?> registerHostel(@RequestBody HostelDetails details){
-        Student_Entity student = studentService.fetchStudent(details.getStudentid());
-        System.out.println(details.getStudentid());
+    @PostMapping("/api/student/hostel/{sId}")
+    public ResponseEntity<?> registerHostel(@RequestBody HostelDetails details, @PathVariable String sId){
+        Student_Entity student = studentService.fetchStudent(sId);
         details.setStudent(student);
         return hostelDetailsService.registerHostel(details);
     }
