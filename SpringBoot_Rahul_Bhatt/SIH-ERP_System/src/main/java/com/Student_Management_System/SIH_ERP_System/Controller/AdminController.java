@@ -36,8 +36,9 @@ public class AdminController {
     @PutMapping("/api/admin/students")
     public String approve(@RequestParam String status,@RequestParam String studentId) {
         Integer a;
-        if ("setStatus".equalsIgnoreCase(status)) a = 1;
-        else a = 2;
+        if ("approve".equalsIgnoreCase(status)) a = 1;
+        else if("reject".equalsIgnoreCase(status)) a = 2;
+        else return "Bad Request";
         return authRepoStudentService.setStatus(studentId, a);
     }
 //    @PutMapping("/api/admin/student/setStatus")
