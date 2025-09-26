@@ -15,9 +15,8 @@ public class Student_Entity {
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MiscDetails miscDetails;
-
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private HostelDetails hostelDetails;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<HostelDetails> hostelDetailsList;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CollegeDetails collegeDetails;
@@ -28,14 +27,14 @@ public class Student_Entity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CourseDetails> courses;
 
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private FeeDetails feeDetails;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FeeDetails> feeDetails;
 
-    public FeeDetails getFeeDetails() {
+    public List<FeeDetails> getFeeDetails() {
         return feeDetails;
     }
 
-    public void setFeeDetails(FeeDetails feeDetails) {
+    public void setFeeDetails(List<FeeDetails> feeDetails) {
         this.feeDetails = feeDetails;
     }
 
@@ -79,12 +78,12 @@ public class Student_Entity {
         this.advisors = advisors;
     }
 
-    public HostelDetails getHostelDetails() {
-        return hostelDetails;
+    public List<HostelDetails> getHostelDetailsList() {
+        return hostelDetailsList;
     }
 
-    public void setHostelDetails(HostelDetails hostelDetails) {
-        this.hostelDetails = hostelDetails;
+    public void setHostelDetailsList(List<HostelDetails> hostelDetailsList) {
+        this.hostelDetailsList = hostelDetailsList;
     }
 
     public CollegeDetails getCollegeDetails() {

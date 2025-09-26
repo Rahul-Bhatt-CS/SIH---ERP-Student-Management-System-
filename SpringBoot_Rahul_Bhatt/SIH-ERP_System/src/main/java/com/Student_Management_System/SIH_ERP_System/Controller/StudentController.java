@@ -10,6 +10,7 @@ import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_HostelDeta
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,21 +38,29 @@ public class StudentController {
     // Get api/student/details-> use query parameters field,semester,id and if else to distinguish what details to send back
     //                           e.g. field = fee send fee details back
 
-    @GetMapping("api/student/details")
-    public ResponseEntity<?> getDetails(@RequestParam String infoType,
-                                        @RequestParam Integer semester,
-                                        @RequestParam String studentId){
-        Object details;
-        if("fee".equalsIgnoreCase(infoType)){
+//    @GetMapping("api/student/details")
+//    public ResponseEntity<?> getDetails(@RequestParam String infoType,
+//                                        @RequestParam Integer semester,
+//                                        @RequestParam String studentId){
+//        Object details;
+//        if("fee".equalsIgnoreCase(infoType)){
+//
+//        } else if ("registration".equalsIgnoreCase(infoType)) {
+//            List<FeeDetails> details = dataRepoFeeDetails.getDetails(semester,studentId);
+//        } else if ("reportCard".equalsIgnoreCase(infoType)) {
+//
+//        }else{
+//
+//        }
+//        return ResponseEntity.of(details);
+//    }
 
-        } else if ("registration".equalsIgnoreCase(infoType)) {
-            List<FeeDetails> details= dataRepoFeeDetails.getDetails(semester,studentId);
-        } else if ("reportCard".equalsIgnoreCase(infoType)) {
-
-        }else{
-
+    @PostMapping("/student/login")
+    public ResponseEntity<?> login(@RequestBody Student_Entity student){
+        if(student == null){
+            return ResponseEntity.badRequest().body("give me a student");
         }
-        return ResponseEntity.of(details);
+        return ResponseEntity.ok(student);
     }
 
 }

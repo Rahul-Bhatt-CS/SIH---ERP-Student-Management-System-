@@ -34,30 +34,28 @@ public class ProjectConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception{
+    public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/api/student/**", "/")
-                .authorizeHttpRequests(r ->
-                        r
-                                .requestMatchers("/api/register").permitAll()
-                                .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT","ADMIN")
-                                .anyRequest()
-                                .authenticated()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/student/login").hasAnyAuthority("STUDENT","ADMIN")
+                        .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT","ADMIN")
                 )
                 .userDetailsService(securityUserStudentDetailsService)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
+
 
 
     @Bean
     @Order(2)
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/api/api/**")
                 .authorizeHttpRequests(r ->
                 r
                         .requestMatchers(HttpMethod.PUT,"/api/admin/**").hasAuthority("ADMIN")

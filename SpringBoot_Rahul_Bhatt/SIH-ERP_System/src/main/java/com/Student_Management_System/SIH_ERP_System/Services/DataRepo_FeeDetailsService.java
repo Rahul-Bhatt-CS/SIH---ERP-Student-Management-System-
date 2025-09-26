@@ -13,7 +13,7 @@ public class DataRepo_FeeDetailsService {
     @Autowired
     DataRepo_FeeDetails repoFeeDetails;
 
-    public List<FeeDetails> fetchFee(String id){return repoFeeDetails.findBySId(id);}
+//    public List<FeeDetails> fetchFee(String id){return repoFeeDetails.findBySId(id);}
 
 
     public ResponseEntity<?> semesterFee(FeeDetails details){

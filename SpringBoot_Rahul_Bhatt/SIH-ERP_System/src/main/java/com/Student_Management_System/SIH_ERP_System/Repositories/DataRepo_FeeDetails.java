@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DataRepo_FeeDetails extends JpaRepository<FeeDetails, String> {
-    List<FeeDetails> findBySId(String id);
+//    List<FeeDetails> findBySId(String id);
 }
