@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DataRepo_FeeDetails extends JpaRepository<FeeDetails, String> {
+    FeeDetails findBySId(String id);
 }
