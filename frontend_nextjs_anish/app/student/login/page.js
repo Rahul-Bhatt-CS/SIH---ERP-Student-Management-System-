@@ -6,7 +6,7 @@ import AuthForm from "@/components/AuthForm";
 import { loginStudent } from "@/lib/api/student";
 
 export default function StudentLoginPage() {
-  const fields = ["name", "password"];
+  const fields = ["studentid", "password"];
 
   return (
     <AuthForm

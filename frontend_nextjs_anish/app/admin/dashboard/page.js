@@ -10,7 +10,7 @@ import { getUnapprovedStudents, approveOrRejectStudent } from "@/lib/api/admin";
 export default function AdminDashboard() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
+  const [actionLoadingIds, setActionLoadingIds] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -29,15 +29,15 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleAction = async (studentid, value) => {
-    setActionLoading(true);
+  const handleAction = async (studentid, status) => {
+    setActionLoadingIds((prev) => [...prev, studentid]);
     try {
-      await approveOrRejectStudent(studentid, value);
+      await approveOrRejectStudent(studentid, status);
       setStudents((prev) => prev.filter((s) => s.studentid !== studentid));
     } catch (err) {
       setError(err.message || "Action failed");
     } finally {
-      setActionLoading(false);
+      setActionLoadingIds((prev) => prev.filter((id) => id !== studentid));
     }
   };
 
@@ -63,49 +63,54 @@ export default function AdminDashboard() {
         </p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {students.map((student) => (
-            <Card
-              key={student.studentid}
-              className="bg-card dark:bg-card-foreground shadow-lg rounded-lg flex flex-col justify-between p-4 transition-colors"
-            >
-              <CardContent className="flex-1">
-                <CardTitle className="text-lg sm:text-xl text-foreground font-semibold mb-2">
-                  {student.name}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Branch: {student.branch}
-                </p>
-                <p className="text-sm text-muted-foreground mb-1">
-                  College: {student.college}
-                </p>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Batch: {student.batch}
-                </p>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Contact: {student.contact}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Email: {student.email}
-                </p>
-              </CardContent>
-              <div className="mt-4 flex gap-2 justify-end">
-                <Button
-                  onClick={() => handleAction(student.studentid, 1)}
-                  disabled={actionLoading}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all flex-1"
-                >
-                  Approve
-                </Button>
-                <Button
-                  onClick={() => handleAction(student.studentid, 2)}
-                  disabled={actionLoading}
-                  className="bg-destructive text-primary-foreground hover:bg-destructive/90 transition-all flex-1"
-                >
-                  Reject
-                </Button>
-              </div>
-            </Card>
-          ))}
+          {students.map((student) => {
+            const isActionLoading = actionLoadingIds.includes(
+              student.studentid
+            );
+            return (
+              <Card
+                key={student.studentid}
+                className="bg-card dark:bg-card-foreground shadow-lg rounded-lg flex flex-col justify-between p-4 transition-colors"
+              >
+                <CardContent className="flex-1">
+                  <CardTitle className="text-lg sm:text-xl text-foreground font-semibold mb-2">
+                    {student.name}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Branch: {student.branch}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    College: {student.college}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Batch: {student.batch}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Contact: {student.contact}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Email: {student.email}
+                  </p>
+                </CardContent>
+                <div className="mt-4 flex gap-2 justify-end">
+                  <Button
+                    onClick={() => handleAction(student.studentid, "accept")}
+                    disabled={isActionLoading}
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all flex-1"
+                  >
+                    {isActionLoading ? "Processing..." : "Approve"}
+                  </Button>
+                  <Button
+                    onClick={() => handleAction(student.studentid, "reject")}
+                    disabled={isActionLoading}
+                    className="bg-destructive text-primary-foreground hover:bg-destructive/90 transition-all flex-1"
+                  >
+                    {isActionLoading ? "Processing..." : "Reject"}
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
