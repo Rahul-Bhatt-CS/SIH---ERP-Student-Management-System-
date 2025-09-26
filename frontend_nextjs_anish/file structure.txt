@@ -31,18 +31,22 @@ student-erp-frontend/
 │  ├─ Header.js                    # Header with theme toggle & role-based nav
 │  ├─ Footer.js                    # Footer with links + social icons
 │  ├─ ThemeToggle.js               # Dark/Light mode toggle
+│  ├─ ChatBotWidget.js             # Chatbot embeded
 │  ├─ DashboardStats.js            # Stats cards with animated counters
 │  ├─ HowItWorks.js                # How It Works step cards
 │  └─ AuthForm.js                  # Auth form for register, login
 │
 ├─ lib/
 │  ├─ api/                         # All API requests organized by module
-│  │  ├─ student.js                # Student-related APIs (approve, fetch, etc.)
+│  │  ├─ student.js                # Student-related APIs (register, login etc.)
 │  │  ├─ faculty.js                # Faculty-specific APIs (courses, exams, etc.)
-|  |  ├─ librarian.js              # Librarian-specific APIs 
-│  │  └─ admin.js                  # Admin-specific APIs (dashboard stats, user approval)
-│  └─ utils.js                     # Utility functions (date formatting, validation)
+|  |  ├─ librarian.js              # Librarian-specific APIs (book approval, etc.)
+│  │  └─ admin.js                  # Admin-specific APIs (user approval, etc.)
+│  └─ utils.js                     # Utility functions (date formatting, validation, etc.)
 │
+├─ utils/
+│  ├─ auth.js                      # Add basicAuth to all requests
+|
 ├─ styles/
 │  ├─ theme.css                    # Custom theme + dark/light variables
 │  └─ tailwind.css                  # Tailwind imports + animations

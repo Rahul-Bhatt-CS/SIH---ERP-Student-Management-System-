@@ -1,7 +1,11 @@
 // lib/api/student.js
 
+import { fetchWithAuth } from "@/utils/auth";
+
+// Base API URL
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Helper to safely parse JSON
 async function safeJson(res) {
   const text = await res.text();
   try {
@@ -11,44 +15,42 @@ async function safeJson(res) {
   }
 }
 
-const BASIC_AUTH_USERNAME = "60448";
-const BASIC_AUTH_PASSWORD = "rahulbhatt";
-
+// Student registration
 export async function registerStudent(data) {
   try {
-    const basicAuth = btoa(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`);
-
-    const res = await fetch(`${API_BASE}/api/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${basicAuth}`,
+    return await fetchWithAuth(
+      `${API_BASE}/api/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      const errorData = await safeJson(res);
-      throw new Error(errorData.message || "Registration failed");
-    }
-
-    return await safeJson(res);
+      "student"
+    ); // automatically uses studentToken
   } catch (err) {
     throw err;
   }
 }
 
-export async function loginStudent(data) {
+// Login function for student (optional, you can use AuthForm directly)
+export async function loginStudent(studentid, password) {
   try {
+    const basicAuth = btoa(`${studentid}:${password}`);
+    localStorage.setItem("studentToken", basicAuth);
+    localStorage.setItem("role", "student");
+
     const res = await fetch(`${API_BASE}/student/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${basicAuth}`,
+      },
+      body: JSON.stringify({ studentid, password }),
     });
 
     if (!res.ok) {
-      const errorData = await safeJson(res);
-      throw new Error(errorData.message || "Login failed");
+      const data = await safeJson(res);
+      throw new Error(data.message || "Login failed");
     }
 
     return await safeJson(res);
