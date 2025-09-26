@@ -5,23 +5,51 @@
 
 | Endpoint                 | Method  | Description                      |
 | ------------------------ | ------- | -------------------------------- |
-| `/register`              | **POST**| Register a new user, : Send data in format :
+| '/api/register'          | **POST**| Register a new user, : Send data in format :
                                                                                       {
-                                                                                        "student":{
-                                                                                            "studentid": "60448",
-                                                                                            "password": "rahulbhatt"
-                                                                                            }
-                                                                                        ,"studentCollegeDetails":{
-                                                                                            "name":"Rahul Bhatt",
-                                                                                            "branch":"Computer Engineering",
-                                                                                            "college":"COT",
-                                                                                            "batch":2023,
-                                                                                            "contact":8630984049,
-                                                                                            "email":"rbhatt.cs@gmail.com"
-                                                                                            }
+                                                                                          "student":{
+                                                                                              "sId": "60448",
+                                                                                              "password": "rahul bhatt"
+                                                                                          }
+                                                                                          ,"studentCollegeDetails":{
+                                                                                              "name":"Rahul Bhatt",
+                                                                                              "branch":"Computer Engineering",
+                                                                                              "college":"COT",
+                                                                                              "batch":2023,
+                                                                                              "contact":3827441412,
+                                                                                              "email":"rbhatt.cs@gmail.com"
+                                                                                          }
                                                                                       }
-| `/unregisteredStudents`   | **GET** | Get all unapproved Students    |
-| `/approveStudent/{value}` | **PUT** | approve a student : unregistered will have 0 by default then when approved send
-                                        value as 1 or if rejected send value as 2 body of json format : {
-                                                                                                            "studentid":"60448"
-                                                                                                        }
+
+
+
+| '/api/register/admin'     | **POST**| Register a new user, : Send data in format :
+                                                                                      {
+                                                                                          "username":"AdminCollege",
+                                                                                          "password":"Admin@123"
+                                                                                      }
+
+
+
+| `/api/admin/students?status=unregistered`   | **GET** | Get all unapproved Students    |
+
+
+| `/api/admin/approve?status=(accept or reject)` | **PUT** | approve a student : status=accept to accept and
+                                                                                 status=reject to reject
+
+                                                                    body format:
+                                                                                {
+                                                                                    "sId":"60466"
+                                                                                }
+
+
+
+
+| `/student/hostel`   | **POST** | register a hostel data format:
+                                                                 {
+                                                                     "sId":"60466",
+                                                                     "nameOfHostel":"Silver Jubilee",
+                                                                     "room":"127",
+                                                                     "sem":"V",
+                                                                     "year":"III"
+                                                                 }

@@ -22,7 +22,7 @@ public class DataRepo_CollegeDetailsService {
     public List<CollegeDetails> getSudentDetailsWithList(List<String> studentids){
         List<CollegeDetails> collegeDetails = new ArrayList<CollegeDetails>();
         for (int i = 0; i < studentids.size(); i++){
-            CollegeDetails details = CollegeDetailsRepo.findByStudentid(studentids.get(i));
+            CollegeDetails details = CollegeDetailsRepo.findBySId(studentids.get(i));
             details.setStudent(null);
             collegeDetails.add(details);
         }
@@ -30,7 +30,7 @@ public class DataRepo_CollegeDetailsService {
 
     }
     public CollegeDetails getSudentDetailsWithId(String studentids){
-        CollegeDetails details = CollegeDetailsRepo.findByStudentid(studentids);
+        CollegeDetails details = CollegeDetailsRepo.findBySId(studentids);
         details.setStudent(null);
         return details;
     }

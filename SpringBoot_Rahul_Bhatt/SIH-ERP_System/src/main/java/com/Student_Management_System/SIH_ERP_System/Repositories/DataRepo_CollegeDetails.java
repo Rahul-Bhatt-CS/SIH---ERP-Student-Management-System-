@@ -4,5 +4,5 @@ import com.Student_Management_System.SIH_ERP_System.Entities.CollegeDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DataRepo_CollegeDetails extends JpaRepository<CollegeDetails, String> {
-    CollegeDetails findByStudentid(String username);
+    CollegeDetails findBySId(String username);
 }

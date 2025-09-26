@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 @Table(name = "misc_details")
 public class MiscDetails {
     @Id
-    private String studentid;
+    private String sId;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "studentid")
+    @JoinColumn(name = "sid")
     private Student_Entity student;
 
     private String localAddress;
@@ -18,12 +18,12 @@ public class MiscDetails {
     private String state;
     private int pincode;
 
-    public String getStudentid() {
-        return studentid;
+    public String getsId() {
+        return sId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setsId(String sId) {
+        this.sId = sId;
     }
 
     public Student_Entity getStudent() {

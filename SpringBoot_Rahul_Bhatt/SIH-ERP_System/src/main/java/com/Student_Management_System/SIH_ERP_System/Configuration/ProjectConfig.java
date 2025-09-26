@@ -38,7 +38,7 @@ public class ProjectConfig {
                 .securityMatcher("/api/register", "/","/student/hostel")
                 .authorizeHttpRequests(r ->
                         r
-                                .requestMatchers(HttpMethod.POST,"/register").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/").hasAuthority("STUDENT")
                                 .requestMatchers(HttpMethod.POST,"/student/hostel").hasAuthority("STUDENT")
                                 .anyRequest()
@@ -58,8 +58,9 @@ public class ProjectConfig {
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(r ->
                 r
-                        .requestMatchers(HttpMethod.GET,"/unregisteredStudents").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/approveStudent/*").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/admin/students").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/admin/approve").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/register/admin").permitAll()
                         .anyRequest()
                         .authenticated()
                 )

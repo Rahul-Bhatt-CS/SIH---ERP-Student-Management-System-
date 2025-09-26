@@ -7,21 +7,21 @@ import java.util.Objects;
 @Embeddable
 public class AdvisorId implements Serializable {
 
-    private String facultyId;
-    private String studentId;
+    private String fId;
+    private String sId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AdvisorId)) return false;
         AdvisorId that = (AdvisorId) o;
-        return Objects.equals(facultyId, that.facultyId) &&
-                Objects.equals(studentId, that.studentId);
+        return Objects.equals(fId, that.fId) &&
+                Objects.equals(sId, that.sId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(facultyId, studentId);
+        return Objects.hash(fId, sId);
     }
 }
 

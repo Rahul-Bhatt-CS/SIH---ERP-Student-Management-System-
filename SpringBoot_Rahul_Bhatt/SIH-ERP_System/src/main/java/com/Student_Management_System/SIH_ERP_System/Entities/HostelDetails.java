@@ -6,22 +6,25 @@ import jakarta.persistence.*;
 @Table(name = "hostel_details")
 public class HostelDetails {
     @Id
-    private String studentid;
+    private String sId;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "studentid")
+    @JoinColumn(name = "sid")
     private Student_Entity student;
 
     private String nameOfHostel;
     private String room;
+    private String sem;
+    private String year;
 
-    public String getStudentid() {
-        return studentid;
+
+    public String getsId() {
+        return sId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setsId(String sId) {
+        this.sId = sId;
     }
 
     public Student_Entity getStudent() {
@@ -46,5 +49,21 @@ public class HostelDetails {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getSem() {
+        return sem;
+    }
+
+    public void setSem(String sem) {
+        this.sem = sem;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }
