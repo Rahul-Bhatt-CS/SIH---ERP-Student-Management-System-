@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 public class FacultyController {
 
     // Approve Registration
+
     // Reject Registration
     //
 }

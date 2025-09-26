@@ -1,4 +1,6 @@
 # SIH---ERP-Student-Management-System-
+
+Impliment getDetails in feeDetailService.
 API Details.
 1.Admin APIs(Format /api/admin/**)
 ->GET /students with query parameter "status=__"   

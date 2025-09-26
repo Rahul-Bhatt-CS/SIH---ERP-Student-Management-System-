@@ -20,4 +20,8 @@ public class DataRepo_FeeDetailsService {
         FeeDetails details1 = repoFeeDetails.save(details);
         return ResponseEntity.ok(details1);
     }
+
+    public List<FeeDetails> getDetails(Integer semester, String studentId) {
+        return null;
+    }
 }
