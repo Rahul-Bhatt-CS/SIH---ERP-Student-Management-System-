@@ -17,8 +17,8 @@ public class SecurityUser_StudentDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student_Entity student = repo.findByStudentid(username);
-        System.out.println(student.getStudentid());
+        Student_Entity student = repo.findBySId(username);
+        System.out.println(student.getsId());
 
         if(student == null){
             throw new UsernameNotFoundException("Student does not Exist");

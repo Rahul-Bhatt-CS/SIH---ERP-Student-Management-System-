@@ -12,6 +12,7 @@ public class DataRepo_HostelDetailsService {
     DataRepo_HostelDetails repo_hostelDetails;
 
     public ResponseEntity<?> registerHostel(HostelDetails details){
-        return ResponseEntity.ok(repo_hostelDetails.save(details));
+        repo_hostelDetails.save(details);
+        return ResponseEntity.ok(details.getStudent());
     }
 }

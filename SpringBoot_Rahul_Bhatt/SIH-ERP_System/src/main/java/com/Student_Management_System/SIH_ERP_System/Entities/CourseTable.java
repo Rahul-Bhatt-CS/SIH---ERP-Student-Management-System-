@@ -11,7 +11,7 @@ public class CourseTable {
     private String courseId;
 
     @ManyToOne
-    @JoinColumn(name = "facultyid")
+    @JoinColumn(name = "f_id")
     private FacultyDetails faculty;
 
     private int credits;

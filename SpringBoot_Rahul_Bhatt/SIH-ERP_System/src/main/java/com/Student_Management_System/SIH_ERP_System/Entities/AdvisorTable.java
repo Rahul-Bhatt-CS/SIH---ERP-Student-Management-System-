@@ -9,13 +9,13 @@ public class AdvisorTable {
     private AdvisorId id;
 
     @ManyToOne
-    @MapsId("facultyId")
-    @JoinColumn(name = "facultyid")
+    @MapsId("fId")
+    @JoinColumn(name = "fid")
     private FacultyDetails faculty;
 
     @ManyToOne
-    @MapsId("studentId")
-    @JoinColumn(name = "studentid")
+    @MapsId("sId")
+    @JoinColumn(name = "sid")
     private Student_Entity student;
 
     public AdvisorId getId() {

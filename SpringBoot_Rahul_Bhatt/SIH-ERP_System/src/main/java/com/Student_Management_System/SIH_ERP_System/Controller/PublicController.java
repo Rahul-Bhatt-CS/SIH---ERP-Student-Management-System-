@@ -20,7 +20,7 @@ public class PublicController {
     @PostMapping("/api/register")
     public ResponseEntity<?> registerStudent(@RequestBody RegisterRequest request){
         ResponseEntity<?> response = studentService.register(request.getStudent());
-        collegeDetails.register(request.getStudentCollegeDetails(), studentService.fetchStudent(request.getStudent().getStudentid()));
+        collegeDetails.register(request.getStudentCollegeDetails(), studentService.fetchStudent(request.getStudent().getsId()));
         return response;
     }
 }

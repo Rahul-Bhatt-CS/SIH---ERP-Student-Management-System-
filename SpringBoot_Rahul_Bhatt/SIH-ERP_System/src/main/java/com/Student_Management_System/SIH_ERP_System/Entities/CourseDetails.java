@@ -10,8 +10,8 @@ public class CourseDetails {
     private CourseDetailsId id;
 
     @ManyToOne
-    @MapsId("studentId")
-    @JoinColumn(name = "studentid")
+    @MapsId("sId")
+    @JoinColumn(name = "sid")
     private Student_Entity student;
 
     @ManyToOne

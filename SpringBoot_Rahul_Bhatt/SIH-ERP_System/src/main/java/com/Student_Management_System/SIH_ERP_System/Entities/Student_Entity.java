@@ -8,10 +8,10 @@ import java.util.List;
 @Table(name = "auth_table_students")
 public class Student_Entity {
     @Id
-    private String studentid;
+    private String sId;
 
     private String password;
-    private Integer enabled;
+    private Integer registered;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MiscDetails miscDetails;
@@ -29,12 +29,12 @@ public class Student_Entity {
     private List<CourseDetails> courses;
 
 
-    public String getStudentid() {
-        return studentid;
+    public String getsId() {
+        return sId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setsId(String sId) {
+        this.sId = sId;
     }
 
     public String getPassword() {
@@ -45,12 +45,12 @@ public class Student_Entity {
         this.password = password;
     }
 
-    public Integer getEnabled() {
-        return enabled;
+    public Integer getRegistered() {
+        return registered;
     }
 
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
+    public void setRegistered(Integer registered) {
+        this.registered = registered;
     }
 
     public MiscDetails getMiscDetails() {

@@ -7,15 +7,15 @@ import jakarta.persistence.*;
 public class CollegeDetails {
 
     @Id
-    private String studentid;
+    private String sId;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "studentid")
+    @JoinColumn(name = "sid")
     private Student_Entity student;
 
     @ManyToOne
-    @JoinColumn(name = "facultyid")
+    @JoinColumn(name = "fid")
     private FacultyDetails faculty;
 
     private String name;
@@ -25,12 +25,12 @@ public class CollegeDetails {
     private Long contact;
     private String email;
 
-    public String getStudentid() {
-        return studentid;
+    public String getsId() {
+        return sId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setsId(String sId) {
+        this.sId = sId;
     }
 
     public Student_Entity getStudent() {

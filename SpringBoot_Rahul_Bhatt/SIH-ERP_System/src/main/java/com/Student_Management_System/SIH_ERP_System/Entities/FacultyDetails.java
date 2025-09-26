@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "faculty_details")
 public class FacultyDetails {
     @Id
-    private String facultyId;
+    private String fId;
 
     private String name;
     private String department;
@@ -23,12 +23,12 @@ public class FacultyDetails {
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdvisorTable> advisors;
 
-    public String getFacultyId() {
-        return facultyId;
+    public String getfId() {
+        return fId;
     }
 
-    public void setFacultyId(String facultyId) {
-        this.facultyId = facultyId;
+    public void setfId(String fId) {
+        this.fId = fId;
     }
 
     public String getName() {

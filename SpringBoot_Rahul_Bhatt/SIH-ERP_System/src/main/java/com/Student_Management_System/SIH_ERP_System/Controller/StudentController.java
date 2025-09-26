@@ -6,7 +6,6 @@ import com.Student_Management_System.SIH_ERP_System.Services.AuthRepo_StudentSer
 import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_HostelDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +18,8 @@ public class StudentController {
 
     @PostMapping("/student/hostel")
     public ResponseEntity<?> registerHostel(@RequestBody HostelDetails details){
-        Student_Entity student = studentService.fetchStudent(details.getStudentid());
-        System.out.println(details.getStudentid());
+        Student_Entity student = studentService.fetchStudent(details.getsId());
+        details.setsId(null);
         details.setStudent(student);
         return hostelDetailsService.registerHostel(details);
     }

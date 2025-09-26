@@ -7,7 +7,7 @@ import java.util.Objects;
 @Embeddable
 public class CourseDetailsId implements Serializable {
 
-    private String studentId;
+    private String sId;
     private String courseId;
 
     @Override
@@ -15,12 +15,12 @@ public class CourseDetailsId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CourseDetailsId)) return false;
         CourseDetailsId that = (CourseDetailsId) o;
-        return Objects.equals(studentId, that.studentId) &&
+        return Objects.equals(sId, that.sId) &&
                 Objects.equals(courseId, that.courseId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, courseId);
+        return Objects.hash(sId, courseId);
     }
 }
