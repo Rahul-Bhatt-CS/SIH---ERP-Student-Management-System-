@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,20 +36,19 @@ public class ProjectConfig {
     @Order(1)
     public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception{
         http
-                .securityMatcher("/api/register", "/","/student/hostel")
+                .securityMatcher("/api/student/**", "/")
                 .authorizeHttpRequests(r ->
                         r
-                                .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/").hasAuthority("STUDENT")
-                                .requestMatchers(HttpMethod.POST,"/student/hostel").hasAuthority("STUDENT")
+                                .requestMatchers("/api/register").permitAll()
+                                .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT","ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
                 .userDetailsService(securityUserStudentDetailsService)
-                .formLogin(form -> form.disable())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
-                .csrf(c -> c.disable());
+                .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
@@ -56,22 +56,23 @@ public class ProjectConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain httpMapping(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(r ->
+        http
+                .securityMatcher("/api/api/**")
+                .authorizeHttpRequests(r ->
                 r
-                        .requestMatchers(HttpMethod.GET,"/api/admin/students").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/admin/approve").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/register/admin").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/api/admin/**").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )
                 .userDetailsService(securityUserAdminDetailsService)
-                .formLogin(form -> form.disable())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
-                .csrf(c -> c.disable());
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
+    //Faculty Security Rules to be Implimented.
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
