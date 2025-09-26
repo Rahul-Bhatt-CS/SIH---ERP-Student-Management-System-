@@ -38,7 +38,7 @@ public class ProjectConfig {
                 .securityMatcher("/api/register", "/","/student/hostel")
                 .authorizeHttpRequests(r ->
                         r
-                                .requestMatchers(HttpMethod.POST,"/register").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/").hasAuthority("STUDENT")
                                 .requestMatchers(HttpMethod.POST,"/student/hostel").hasAuthority("STUDENT")
                                 .anyRequest()
