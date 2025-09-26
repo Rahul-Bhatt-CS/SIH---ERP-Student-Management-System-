@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 public class FeeDetails {
 
     @Id
-    @Column(name = "s_id")
-    private String sId;   // Primary key and also foreign key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // Unique primary key for each fee record
 
     private String trxnNo;
     private Double amount;
@@ -18,19 +18,18 @@ public class FeeDetails {
     @Column(name = "time_of_payment")
     private LocalDateTime timeOfPayment;
 
-    // Relationship with Student
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId  // Uses sId as both PK and FK
+    // Many fee records can belong to one student
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "s_id", referencedColumnName = "sId")
     private Student_Entity student;
 
     // Getters and Setters
-    public String getsId() {
-        return sId;
+    public Long getId() {
+        return id;
     }
 
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTrxnNo() {
