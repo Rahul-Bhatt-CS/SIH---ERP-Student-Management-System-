@@ -28,7 +28,7 @@ public class PublicController {
         return response;
     }
 
-    @PostMapping("/api/register/admin")
+    @PostMapping("/api/admin/register")
     public ResponseEntity<?> registerAdmin(@RequestBody Admin_Entity admin){
         return adminService.registernewAdmin(admin);
     }

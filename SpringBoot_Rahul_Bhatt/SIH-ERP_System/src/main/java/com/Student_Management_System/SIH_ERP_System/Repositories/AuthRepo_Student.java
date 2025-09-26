@@ -13,4 +13,10 @@ public interface AuthRepo_Student extends JpaRepository<Student_Entity, String> 
 
     @Query(value = "SELECT s.sId FROM Student_Entity s WHERE s.registered = 0")
     List<String> findDisabledStudents();
+
+    @Query(value = "SELECT s.sId FROM Student_Entity s WHERE s.registered = 1")
+    List<String> findApprovedStudents();
+
+    @Query(value = "SELECT s.sId FROM Student_Entity s WHERE s.registered = 2")
+    List<String> findRejectedStudents();
 }

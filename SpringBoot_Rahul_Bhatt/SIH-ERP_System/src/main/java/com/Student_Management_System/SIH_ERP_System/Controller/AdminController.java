@@ -1,9 +1,11 @@
 package com.Student_Management_System.SIH_ERP_System.Controller;
 
 import com.Student_Management_System.SIH_ERP_System.Entities.CollegeDetails;
+import com.Student_Management_System.SIH_ERP_System.Entities.Student_Entity;
 import com.Student_Management_System.SIH_ERP_System.Services.AuthRepo_StudentService;
 import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_CollegeDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,15 +22,22 @@ public class AdminController {
     public List<CollegeDetails> getStudents(@RequestParam String status) {
         List<CollegeDetails> StudentsCollegeDetails = new ArrayList<>();
 
-        if ("unregistered".equalsIgnoreCase(status)) {
+        if ("pending".equalsIgnoreCase(status)) {
             var student = authRepoStudentService.unregisteredStudents();
             student.forEach(k ->
                     StudentsCollegeDetails.add(collegeDetailsService.getSudentDetailsWithId(k))
             );
         } else if ("approved".equalsIgnoreCase(status)) {
-            //get approved students
+            var student = authRepoStudentService.approvedStudents();
+            student.forEach(k ->
+                    StudentsCollegeDetails.add(collegeDetailsService.getSudentDetailsWithId(k))
+            );
+
         }else if ("rejected".equalsIgnoreCase(status)){
-            //get rejected students
+            var student = authRepoStudentService.rejectedStudents();
+            student.forEach(k ->
+                    StudentsCollegeDetails.add(collegeDetailsService.getSudentDetailsWithId(k))
+            );
         }
 
         return StudentsCollegeDetails;
@@ -41,13 +50,15 @@ public class AdminController {
         else return "Bad Request";
         return authRepoStudentService.setStatus(studentId, a);
     }
-//    @PutMapping("/api/admin/student/setStatus")
-//    public String setStatus(@RequestBody Student_Entity studentid){
-//        return authRepoStudentService.setStatus(studentid,1);
-//    }
-//    @PutMapping("/api/admin/student/reject")
-//    public String reject(@RequestBody Student_Entity studentid
-//            ,@PathVariable int value){
-//        return authRepoStudentService.setStatus(studentid,1);
-//    }
+
+
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> login(@RequestBody Student_Entity student){
+        if(student == null){
+            return ResponseEntity.badRequest().body("give me a student");
+        }
+        return ResponseEntity.ok(student);
+    }
+
 }

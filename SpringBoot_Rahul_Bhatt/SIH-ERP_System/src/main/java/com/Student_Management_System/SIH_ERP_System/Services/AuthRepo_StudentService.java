@@ -44,4 +44,8 @@ public class AuthRepo_StudentService {
         return repo.findDisabledStudents();
     }
 
+    public List<String> approvedStudents(){return repo.findApprovedStudents();}
+
+    public List<String> rejectedStudents(){return repo.findRejectedStudents();}
+
 }

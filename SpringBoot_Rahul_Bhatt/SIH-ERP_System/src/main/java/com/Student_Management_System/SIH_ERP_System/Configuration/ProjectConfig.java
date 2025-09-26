@@ -36,10 +36,15 @@ public class ProjectConfig {
     @Order(1)
     public SecurityFilterChain httpmappingStudent(HttpSecurity http) throws Exception {
         http
+                .securityMatcher("/asmin/login","/api/admin/register","/api/register","/student/login","/api/student/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/admin/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/student/login").hasAnyAuthority("STUDENT","ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/login").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT","ADMIN")
+                        .anyRequest()
+                        .authenticated()
                 )
                 .userDetailsService(securityUserStudentDetailsService)
                 .formLogin(AbstractHttpConfigurer::disable)
