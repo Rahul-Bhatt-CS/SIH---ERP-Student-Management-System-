@@ -22,7 +22,7 @@ export default function ChatbotWidget() {
   const offsetRef = useRef({ x: 0, y: 0 });
   const resizeStartRef = useRef({ x: 0, y: 0, width: 320, height: 500 });
 
-  const iframeUrl = `https://smart-india-hackathon-prototype-zoml4dx6vklymxddwamy2v.streamlit.app/?embed=true&theme=${theme}`;
+  const iframeUrl = `https://smart-india-hackathon-prototype-n8huzqj27etzt8x6bv9nns.streamlit.app/?embed=true&theme=${theme}`;
 
   useEffect(() => setIsClient(true), []);
 
