@@ -4,6 +4,7 @@ import com.Student_Management_System.SIH_ERP_System.Entities.CollegeDetails;
 import com.Student_Management_System.SIH_ERP_System.Entities.Student_Entity;
 import com.Student_Management_System.SIH_ERP_System.Services.AuthRepo_StudentService;
 import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_CollegeDetailsService;
+import com.Student_Management_System.SIH_ERP_System.Services.DataRepo_FacultyDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ public class AdminController {
     DataRepo_CollegeDetailsService collegeDetailsService;
     @Autowired
     AuthRepo_StudentService authRepoStudentService;
+    @Autowired
+    DataRepo_FacultyDetailsService facultyDetailsService;
 
     @GetMapping("/api/admin/students")
     public List<CollegeDetails> getStudents(@RequestParam String status) {
@@ -42,13 +45,25 @@ public class AdminController {
 
         return StudentsCollegeDetails;
     }
+
+
     @PutMapping("/api/admin/students")
-    public String approve(@RequestParam String status,@RequestParam String studentId) {
+    public String approveS(@RequestParam String status,@RequestParam String studentId) {
         Integer a;
         if ("approve".equalsIgnoreCase(status)) a = 1;
         else if("reject".equalsIgnoreCase(status)) a = 2;
         else return "Bad Request";
         return authRepoStudentService.setStatus(studentId, a);
+    }
+
+
+    @PutMapping("/api/admin/faculties")
+    public String approveF(@RequestParam String status,@RequestParam String facultyId) {
+        Integer a;
+        if ("approve".equalsIgnoreCase(status)) a = 1;
+        else if("reject".equalsIgnoreCase(status)) a = 2;
+        else return "Bad Request";
+        return facultyDetailsService.setStatus(facultyId, a);
     }
 
 

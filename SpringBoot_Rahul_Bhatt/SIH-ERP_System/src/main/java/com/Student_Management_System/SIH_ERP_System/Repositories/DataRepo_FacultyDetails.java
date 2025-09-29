@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DataRepo_FacultyDetails extends JpaRepository<FacultyDetails, String> {
+    FacultyDetails findByFId(String id);
 }

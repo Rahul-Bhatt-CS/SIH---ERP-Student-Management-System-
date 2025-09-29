@@ -13,6 +13,7 @@ public class FacultyDetails {
     private String name;
     private String department;
     private String post;
+    private Integer registered;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CollegeDetails> students;
@@ -22,6 +23,14 @@ public class FacultyDetails {
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdvisorTable> advisors;
+
+    public Integer getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(Integer registered) {
+        this.registered = registered;
+    }
 
     public String getfId() {
         return fId;
