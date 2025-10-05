@@ -32,6 +32,13 @@ public class StudentController {
         return hostelDetailsService.registerHostel(details);
     }
 
+
+//    Fee Details Registration -> POST api/student/fee
+//                              -> Students need to enter their fee details that will be further approved
+//                              by the Comptroller
+//    Misc Details -> POST these details will be needed at the time of registration as well so we can add
+//                    them in the Register Request to save api calls and time of execution/registration of
+//                    Student.
     //Course Registration-> POST api/student/course
     //                     -> One Course at a Time
     //See Report Card semester registration status etc....
