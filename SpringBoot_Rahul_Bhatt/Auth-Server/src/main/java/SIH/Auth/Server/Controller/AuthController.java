@@ -46,7 +46,6 @@ public class AuthController {
     // ✅ Login and generate JWT
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody User user) {
-        user.setAuthorities("STUDENT");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );

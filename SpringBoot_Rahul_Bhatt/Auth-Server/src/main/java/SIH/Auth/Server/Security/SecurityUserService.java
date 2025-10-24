@@ -25,13 +25,6 @@ public class SecurityUserService implements UserDetailsService {
         User user = repo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        Collection<GrantedAuthority> authorities = Arrays.stream(
-                        user.getAuthorities() == null ? new String[]{} : user.getAuthorities().split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        return new SecurityUser(user);
     }
 }

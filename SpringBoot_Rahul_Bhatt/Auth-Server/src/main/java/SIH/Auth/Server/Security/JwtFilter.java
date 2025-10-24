@@ -43,7 +43,6 @@ public class JwtFilter extends OncePerRequestFilter {
                         .filter(s -> !s.isEmpty())
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-                System.out.println(authorities);
                 var authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {

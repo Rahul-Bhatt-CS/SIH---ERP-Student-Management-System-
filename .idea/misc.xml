@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/SpringBoot_Rahul_Bhatt/SIH-ERP_System/pom.xml" />
+        <option value="$PROJECT_DIR$/SpringBoot_Rahul_Bhatt/Auth-Server/pom.xml" />
       </list>
     </option>
   </component>
