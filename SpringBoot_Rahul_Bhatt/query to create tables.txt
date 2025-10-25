@@ -1,20 +1,3 @@
-create database sih;
-use sih;
-
-
-CREATE TABLE auth_table_students(
-	studentid varchar(255) primary key,
-	enabled int,
-	password varchar(255)
-);
-
-
-CREATE TABLE admin_auth_table(
-	username varchar(255) primary key,
-	password varchar(255)
-);
-
-
 CREATE TABLE misc_details (
     studentid VARCHAR(255),
     local_address VARCHAR(255),
