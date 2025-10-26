@@ -2,10 +2,12 @@ package SIH.Student.Controller;
 
 import SIH.Student.Models.Advisor;
 import SIH.Student.Models.CollegeDetails;
+import SIH.Student.Models.Courses;
 import SIH.Student.Models.FacultyDetails;
 import SIH.Student.Security.JwtUtil;
 import SIH.Student.Services.AdvisorService;
 import SIH.Student.Services.CollegeService;
+import SIH.Student.Services.CoursesService;
 import SIH.Student.Services.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class FacultyController {
     AdvisorService advisorService;
     @Autowired
     CollegeService collegeService;
+    @Autowired
+    CoursesService coursesService;
 
     @PostMapping("/details")
     public ResponseEntity<?> saveFaculty(@RequestBody FacultyDetails details,
@@ -60,5 +64,15 @@ public class FacultyController {
     public List<CollegeDetails> getAdvisee(@RequestHeader("Authorization") String token){
         String username = jwtUtil.validateAndGetClaims(token.substring(7)).getSubject();
         return advisorService.getAdvisee(username);
+    }
+
+    @PostMapping("/course")
+    public ResponseEntity<?> addNewCourse(@RequestBody Courses courses){
+        String facultyid = courses.getFaculty_id();
+        FacultyDetails faculty = facultyService.findFaculty(facultyid);
+        if(faculty == null){
+            return ResponseEntity.badRequest().body("Faculty Not Found");
+        }
+        return coursesService.saveCourse(courses);
     }
 }

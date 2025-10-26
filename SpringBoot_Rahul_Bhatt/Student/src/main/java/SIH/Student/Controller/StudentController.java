@@ -1,17 +1,13 @@
 package SIH.Student.Controller;
 
-import SIH.Student.Models.CollegeDetails;
-import SIH.Student.Models.FeeDetails;
-import SIH.Student.Models.HostelDetails;
-import SIH.Student.Models.MiscDetails;
+import SIH.Student.Models.*;
 import SIH.Student.Security.JwtUtil;
-import SIH.Student.Services.CollegeService;
-import SIH.Student.Services.FeeService;
-import SIH.Student.Services.HostelService;
-import SIH.Student.Services.MiscDetailsService;
+import SIH.Student.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -26,6 +22,10 @@ public class StudentController {
     FeeService feeService;
     @Autowired
     MiscDetailsService miscDetailsService;
+    @Autowired
+    CoursesService coursesService;
+    @Autowired
+    CourseDetailsService courseDetailsService;
 
     @PostMapping("/college")
     public ResponseEntity<?> saveCollegeDetails(@RequestBody CollegeDetails collegeDetails,
@@ -60,6 +60,28 @@ public class StudentController {
         String username = jwtUtil.validateAndGetClaims(token.substring(7)).getSubject();
         details.setUsername(username);
         return miscDetailsService.saveDetails(details);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerCourse(@RequestBody CourseDetails details,
+                                            @RequestHeader("Authorization") String token){
+        String courseid = details.getCourse_id();
+        Courses courses = coursesService.getCourse(courseid);
+        if(courses == null){
+            return ResponseEntity.badRequest().body("Course Not Found");
+        }
+        String username = jwtUtil.validateAndGetClaims(token.substring(7)).getSubject();
+        CourseDetails registered = courseDetailsService.findRegistered(username);
+        if(registered != null){
+            return ResponseEntity.badRequest().body("Student already registered");
+        }
+        details.setUsername(username);
+        return courseDetailsService.registerStudent(details);
+    }
+
+    @GetMapping("/courses")
+    public List<Courses> getCourses(){
+        return coursesService.getCourse();
     }
 
     @GetMapping("/hello")
