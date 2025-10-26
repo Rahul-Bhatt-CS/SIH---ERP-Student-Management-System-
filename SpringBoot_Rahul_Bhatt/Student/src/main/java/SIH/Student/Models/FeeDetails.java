@@ -2,7 +2,7 @@ package SIH.Student.Models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "fee_details")
@@ -15,7 +15,7 @@ public class FeeDetails {
     private String trxnNo;
     private Double amount;
     private String semester;
-    private LocalDateTime timeOfPayment;
+    private Date timeOfPayment;
 
     public Long getId() {
         return id;
@@ -57,11 +57,11 @@ public class FeeDetails {
         this.semester = semester;
     }
 
-    public LocalDateTime getTimeOfPayment() {
+    public Date getTimeOfPayment() {
         return timeOfPayment;
     }
 
-    public void setTimeOfPayment(LocalDateTime timeOfPayment) {
+    public void setTimeOfPayment(Date timeOfPayment) {
         this.timeOfPayment = timeOfPayment;
     }
 }

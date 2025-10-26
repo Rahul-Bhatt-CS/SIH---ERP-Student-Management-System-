@@ -10,6 +10,7 @@ public class CollegeDetails {
 
     @Id
     private String username;
+    private String facultyid;
     private String name;
     private String branch;
     private String college;
@@ -25,6 +26,14 @@ public class CollegeDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFacultyid() {
+        return facultyid;
+    }
+
+    public void setFacultyid(String facultyid) {
+        this.facultyid = facultyid;
     }
 
     public String getName() {

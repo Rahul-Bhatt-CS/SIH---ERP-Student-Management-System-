@@ -13,6 +13,10 @@ public class CollegeService {
     @Autowired
     CollegeRepo repo;
 
+    public CollegeDetails getDetails(String username){
+        return repo.findByUsername(username);
+    }
+
     public ResponseEntity<?> saveDetails(CollegeDetails collegeDetails){
         CollegeDetails save = repo.save(collegeDetails);
         if(save != null) return ResponseEntity.ok(save);

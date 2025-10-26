@@ -16,4 +16,8 @@ public class FeeService {
         if(save == null) return ResponseEntity.badRequest().body("could not save the details at the moment");
         return ResponseEntity.ok(save);
     }
+
+    public FeeDetails getfees(String userneme, String sem){
+        return repo.findByUserSem(userneme, sem);
+    }
 }

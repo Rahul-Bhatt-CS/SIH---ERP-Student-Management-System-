@@ -12,6 +12,12 @@ public class FacultyService {
     @Autowired
     FacultyRepo repo;
 
+    public ResponseEntity<?> saveDetails(FacultyDetails details){
+        FacultyDetails save = repo.save(details);
+        if(save == null) return ResponseEntity.badRequest().body("Could not save Faculty at the moment");
+        return ResponseEntity.ok(save);
+    }
+
     public ResponseEntity<?> setStatus(String username, Integer a){
         FacultyDetails details = repo.findByUsername(username);
         if(a == 1){
